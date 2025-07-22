@@ -1,4 +1,7 @@
 package com.autoria.enums;
 
-public class CurrencyCode {
+public enum CurrencyCode {
+    USD,
+    EUR,
+    UAH
 }

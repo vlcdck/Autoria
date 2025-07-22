@@ -1,4 +1,6 @@
 package com.autoria.enums;
 
-public class AccountType {
+public enum AccountType {
+    BASIC,
+    PREMIUM
 }
