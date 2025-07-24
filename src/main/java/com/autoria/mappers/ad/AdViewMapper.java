@@ -1,4 +1,4 @@
-package com.autoria.mappers;
+package com.autoria.mappers.ad;
 
 import com.autoria.models.ad.AdView;
 import com.autoria.models.ad.dto.AdViewResponseDto;

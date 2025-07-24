@@ -1,4 +1,4 @@
-package com.autoria.mappers;
+package com.autoria.mappers.car;
 
 import com.autoria.models.car.CarBrand;
 import com.autoria.models.car.CarModel;

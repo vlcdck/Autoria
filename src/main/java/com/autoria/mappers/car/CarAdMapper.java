@@ -1,4 +1,4 @@
-package com.autoria.mappers;
+package com.autoria.mappers.car;
 
 import com.autoria.models.ad.CarAd;
 import com.autoria.models.ad.dto.CarAdRequestDto;

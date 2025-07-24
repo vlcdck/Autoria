@@ -1,4 +1,4 @@
-package com.autoria.mappers;
+package com.autoria.mappers.dealsership;
 
 import com.autoria.models.dealership.Dealership;
 import com.autoria.models.dealership.dto.DealershipRequestDto;

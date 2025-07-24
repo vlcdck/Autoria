@@ -1,6 +1,7 @@
-package com.autoria.mappers;
+package com.autoria.mappers.permission;
 
 import com.autoria.models.user.Permission;
+import com.autoria.models.user.dto.PermissionRequestDto;
 import com.autoria.models.user.dto.PermissionResponseDto;
 import org.springframework.stereotype.Component;
 
@@ -13,5 +14,12 @@ public class PermissionMapper {
         permissionResponseDto.setCode(permission.getCode());
         permissionResponseDto.setDescription(permission.getDescription());
         return permissionResponseDto;
+    }
+
+    public Permission toEntity(PermissionRequestDto permissionRequestDto) {
+        return Permission.builder()
+                .code(permissionRequestDto.getCode())
+                .description(permissionRequestDto.getDescription())
+                .build();
     }
 }

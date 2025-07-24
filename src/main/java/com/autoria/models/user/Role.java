@@ -1,7 +1,7 @@
 package com.autoria.models.user;
 
+import com.autoria.enums.RoleType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +22,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank
     @Column(unique = true, nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleType name;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",

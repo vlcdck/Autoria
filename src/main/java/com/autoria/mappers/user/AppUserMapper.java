@@ -1,4 +1,4 @@
-package com.autoria.mappers;
+package com.autoria.mappers.user;
 
 import com.autoria.models.user.AppUser;
 import com.autoria.models.user.Role;
