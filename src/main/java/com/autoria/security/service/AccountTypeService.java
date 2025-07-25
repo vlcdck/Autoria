@@ -1,4 +1,4 @@
-package com.autoria.services.security;
+package com.autoria.security.service;
 
 import com.autoria.models.user.dto.ChangeAccountTypeDto;
 

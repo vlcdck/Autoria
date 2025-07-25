@@ -24,7 +24,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class AppUser {
+public class AppUser{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -45,6 +45,9 @@ public class AppUser {
     @NotBlank
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dealership_id")

@@ -1,24 +1,40 @@
-package com.autoria.security;
+package com.autoria.security.user;
 
 import com.autoria.models.user.AppUser;
+import com.autoria.models.user.Role;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Getter
 @AllArgsConstructor
 public class AppUserDetails implements UserDetails {
 
     private final AppUser appUser;
 
+    public UUID getId() {
+        return appUser.getId();
+    }
+
+    public Set<Role> getRoles() {
+        return appUser.getRoles();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (appUser.getRoles() == null) return Collections.emptySet();
+
         return appUser.getRoles().stream()
                 .map(role -> "ROLE_" + role.getName().name())
                 .map(roleName -> (GrantedAuthority) () -> roleName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -28,17 +44,17 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return appUser.getEmail();
+        return appUser.getEmail(); // Spring Security працює з username – у тебе це email
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true; // можна замінити на appUser.isAccountNonExpired() якщо є
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return true; // аналогічно – можеш додати поле в AppUser якщо потрібно
     }
 
     @Override
@@ -50,4 +66,6 @@ public class AppUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

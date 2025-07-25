@@ -1,4 +1,4 @@
-package com.autoria.security;
+package com.autoria.security.user;
 
 import com.autoria.models.user.AppUser;
 import com.autoria.repository.AppUserRepository;
@@ -15,7 +15,7 @@ public class AppUserDetailService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         AppUser appUser = appUserRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
         return new AppUserDetails(appUser);
