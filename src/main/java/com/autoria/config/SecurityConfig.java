@@ -69,9 +69,14 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Без сесій (JWT)
-                .authenticationProvider(authenticationProvider())  // Вказуємо власний провайдер аутентифікації
+                .authenticationProvider(authenticationProvider()) // Вказуємо власний провайдер аутентифікації
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Додаємо JWT фільтр
 
         return http.build();
+
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+//        return http.build();
     }
 }

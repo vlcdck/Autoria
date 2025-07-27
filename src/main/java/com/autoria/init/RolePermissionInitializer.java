@@ -1,0 +1,62 @@
+package com.autoria.init;
+
+import com.autoria.enums.PermissionCode;
+import com.autoria.enums.RoleType;
+import com.autoria.models.user.Permission;
+import com.autoria.models.user.Role;
+import com.autoria.repository.PermissionRepository;
+import com.autoria.repository.RoleRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Component
+@RequiredArgsConstructor
+public class RolePermissionInitializer implements ApplicationRunner {
+
+    private final PermissionRepository permissionRepository;
+    private final RoleRepository roleRepository;
+
+    @Override
+    public void run(ApplicationArguments args) {
+        // 1. Створюємо всі можливі Permission
+        Arrays.stream(PermissionCode.values()).forEach(code -> {
+            permissionRepository.findByCode(code.name()).orElseGet(() ->
+                    permissionRepository.save(Permission.builder()
+                            .code(code.name())
+                            .description(code.name().replace("_", " ").toLowerCase())
+                            .build()));
+        });
+
+        // 2. Створюємо ролі з пермішнами
+        createRole(RoleType.BUYER, Set.of());
+        createRole(RoleType.SELLER, Set.of(
+                PermissionCode.CREATE_AD,
+                PermissionCode.EDIT_AD
+        ));
+        createRole(RoleType.MANAGER, Set.of(
+                PermissionCode.MANAGE_ADS,
+                PermissionCode.BAN_USER,
+                PermissionCode.APPROVE_AD
+        ));
+        createRole(RoleType.ADMIN, Set.of(PermissionCode.values())); // All perms
+    }
+
+    private void createRole(RoleType roleName, Set<PermissionCode> permissionCodes) {
+        if (roleRepository.findByName(roleName).isEmpty()) {
+            Set<Permission> permissions = permissionCodes.stream()
+                    .map(code -> permissionRepository.findByCode(code.name()).orElseThrow())
+                    .collect(Collectors.toSet());
+
+            roleRepository.save(Role.builder()
+                    .name(roleName)
+                    .permissions(permissions)
+                    .build());
+        }
+    }
+}

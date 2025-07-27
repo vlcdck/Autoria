@@ -27,13 +27,21 @@ public class AppUserDetails implements UserDetails {
         return appUser.getRoles();
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (appUser.getRoles() == null) return Collections.emptySet();
 
         return appUser.getRoles().stream()
-                .map(role -> "ROLE_" + role.getName().name())
-                .map(roleName -> (GrantedAuthority) () -> roleName)
+                .flatMap(role -> {
+                    // Додаємо і роль, і її пермішени
+                    Set<GrantedAuthority> authorities = role.getPermissions().stream()
+                            .map(permission -> (GrantedAuthority) () -> permission.getCode())
+                            .collect(Collectors.toSet());
+
+                    // Додаємо роль як GrantedAuthority (якщо потрібно)
+                    authorities.add((GrantedAuthority) () -> "ROLE_" + role.getName().name());
+
+                    return authorities.stream();
+                })
                 .collect(Collectors.toSet());
     }
 
@@ -64,7 +72,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return appUser.isEnabled();
     }
 
 

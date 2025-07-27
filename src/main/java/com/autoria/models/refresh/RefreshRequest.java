@@ -1,4 +1,4 @@
-package com.autoria.models;
+package com.autoria.models.refresh;
 
 import lombok.Data;
 

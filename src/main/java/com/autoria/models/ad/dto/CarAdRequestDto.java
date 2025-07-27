@@ -12,8 +12,8 @@ import java.util.UUID;
 @Data
 public class CarAdRequestDto {
 
-    @NotNull
-    private UUID sellerId;
+//    @NotNull
+//    private UUID sellerId;
 
     @NotNull
     private AdStatus status;
@@ -40,15 +40,15 @@ public class CarAdRequestDto {
 
     @NotNull
     @Positive
-    private BigDecimal priseUSD;
+    private BigDecimal priceUSD;
 
     @NotNull
     @Positive
-    private BigDecimal priseEUR;
+    private BigDecimal priceEUR;
 
     @NotNull
     @Positive
-    private BigDecimal priseUAH;
+    private BigDecimal priceUAH;
 
     @NotBlank
     private String exchangeRateSource;

@@ -1,7 +1,7 @@
 package com.autoria.enums;
 
 public enum AdStatus {
-    PENDING_REVIEW,
+    PENDING,
     ACTIVE,
     INACTIVE,
     BLOCKED,
