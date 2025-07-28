@@ -56,7 +56,7 @@ public class AuthenticationService {
             throw new EmailAlreadyTakenException("Email already taken");
         }
 
-        Role baseRole = roleRepository.findByName(RoleType.BUYER)
+        Role baseRole = roleRepository.findByName(RoleType.SELLER)
                 .orElseThrow(() -> new RuntimeException("Base role USER not found"));
 
         AppUser appUser = AppUser.builder()

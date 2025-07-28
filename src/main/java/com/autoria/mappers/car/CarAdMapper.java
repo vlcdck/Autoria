@@ -1,6 +1,5 @@
 package com.autoria.mappers.car;
 
-import com.autoria.enums.AdStatus;
 import com.autoria.models.ad.CarAd;
 import com.autoria.models.ad.dto.CarAdRequestDto;
 import com.autoria.models.ad.dto.CarAdResponseDto;
@@ -8,10 +7,6 @@ import com.autoria.models.car.CarBrand;
 import com.autoria.models.car.CarModel;
 import com.autoria.models.dealership.Dealership;
 import com.autoria.models.user.AppUser;
-import com.autoria.repository.AppUserRepository;
-import com.autoria.repository.CarBrandRepository;
-import com.autoria.repository.CarModelRepository;
-import com.autoria.repository.DealershipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,50 +14,22 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CarAdMapper {
 
-    private final AppUserRepository appUserRepository;
-    private final DealershipRepository dealershipRepository;
-    private final CarBrandRepository carBrandRepository;
-    private final CarModelRepository carModelRepository;
-
-    public CarAd toEntity(CarAdRequestDto dto, AppUser seller) {
-        Dealership dealership = dealershipRepository.findById(dto.getDealershipId())
-                .orElseThrow(() -> new IllegalArgumentException("Dealership not found"));
-
-        CarBrand brand = carBrandRepository.findById(dto.getBrandId())
-                .orElseThrow(() -> new IllegalArgumentException("Car brand not found"));
-
-        CarModel model = carModelRepository.findById(dto.getModelId())
-                .orElseThrow(() -> new IllegalArgumentException("Car model not found"));
-
-        return CarAd.builder()
-                .seller(seller)
-                .dealership(dealership)
-                .brand(brand)
-                .model(model)
-                .year(dto.getYear())
-                .originalCurrency(dto.getOriginalCurrency())
-                .price(dto.getPrice())
-                .priceUSD(dto.getPriceUSD())
-                .priceEUR(dto.getPriceEUR())
-                .priceUAH(dto.getPriceUAH())
-                .exchangeRateSource(dto.getExchangeRateSource())
-                .exchangeRateDate(dto.getExchangeRateDate())
-                .editAttempts(0)
-                .status(AdStatus.PENDING)
-                .build();
-    }
-
     public CarAdResponseDto toDto(CarAd ad) {
-        CarAdResponseDto dto = new CarAdResponseDto();
+        if (ad == null) return null;
 
+        CarAdResponseDto dto = new CarAdResponseDto();
         dto.setId(ad.getId());
         dto.setSellerId(ad.getSeller() != null ? ad.getSeller().getId() : null);
-        dto.setDealershipId(ad.getDealership() != null ? ad.getDealership().getId() : null);
-        dto.setBrandId(ad.getBrand() != null ? ad.getBrand().getId() : null);
-        dto.setModelId(ad.getModel() != null ? ad.getModel().getId() : null);
         dto.setStatus(ad.getStatus());
         dto.setEditAttempts(ad.getEditAttempts());
+        dto.setDealershipId(ad.getDealership() != null ? ad.getDealership().getId() : null);
+        dto.setBrandId(ad.getBrand().getId());
+        dto.setModelId(ad.getModel().getId());
         dto.setYear(ad.getYear());
+        dto.setMileage(ad.getMileage());
+        dto.setFuelType(ad.getFuelType());
+        dto.setOwnersCount(ad.getOwnersCount());
+        dto.setPhotos(ad.getPhotos());
         dto.setOriginalCurrency(ad.getOriginalCurrency());
         dto.setPrice(ad.getPrice());
         dto.setPriceUSD(ad.getPriceUSD());
@@ -72,5 +39,30 @@ public class CarAdMapper {
         dto.setExchangeRateDate(ad.getExchangeRateDate());
 
         return dto;
+    }
+
+    public CarAd toEntity(CarAdRequestDto dto, AppUser seller, Dealership dealership, CarBrand brand, CarModel model) {
+        if (dto == null) return null;
+
+        return CarAd.builder()
+                .seller(seller)
+                .status(dto.getStatus())
+                .editAttempts(dto.getEditAttempts())
+                .dealership(dealership)
+                .brand(brand)
+                .model(model)
+                .year(dto.getYear())
+                .mileage(dto.getMileage())
+                .fuelType(dto.getFuelType())
+                .ownersCount(dto.getOwnersCount())
+                .photos(dto.getPhotos())
+                .originalCurrency(dto.getOriginalCurrency())
+                .price(dto.getPrice())
+                .priceUSD(dto.getPriceUSD())
+                .priceUAH(dto.getPriceUAH())
+                .priceEUR(dto.getPriceEUR())
+                .exchangeRateSource(dto.getExchangeRateSource())
+                .exchangeRateDate(dto.getExchangeRateDate())
+                .build();
     }
 }

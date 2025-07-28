@@ -33,18 +33,25 @@ public class RolePermissionInitializer implements ApplicationRunner {
                             .build()));
         });
 
-        // 2. Створюємо ролі з пермішнами
-        createRole(RoleType.BUYER, Set.of());
+        createRole(RoleType.BUYER, Set.of()); // без доступу до оголошень
+
         createRole(RoleType.SELLER, Set.of(
-                PermissionCode.CREATE_AD,
-                PermissionCode.EDIT_AD
+                PermissionCode.CREATE_OWN_AD,
+                PermissionCode.VIEW_OWN_AD,
+                PermissionCode.UPDATE_OWN_AD,
+                PermissionCode.DELETE_OWN_AD
         ));
+
         createRole(RoleType.MANAGER, Set.of(
+                PermissionCode.VIEW_ANY_AD,
+                PermissionCode.UPDATE_ANY_AD,
+                PermissionCode.DELETE_ANY_AD,
                 PermissionCode.MANAGE_ADS,
-                PermissionCode.BAN_USER,
-                PermissionCode.APPROVE_AD
+                PermissionCode.APPROVE_AD,
+                PermissionCode.BAN_USER
         ));
-        createRole(RoleType.ADMIN, Set.of(PermissionCode.values())); // All perms
+
+        createRole(RoleType.ADMIN, Set.of(PermissionCode.values())); // all
     }
 
     private void createRole(RoleType roleName, Set<PermissionCode> permissionCodes) {

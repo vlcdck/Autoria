@@ -2,18 +2,18 @@ package com.autoria.models.ad.dto;
 
 import com.autoria.enums.AdStatus;
 import com.autoria.enums.CurrencyCode;
+import com.autoria.enums.FuelType;
+import com.autoria.validation.ValidYear;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 public class CarAdRequestDto {
-
-//    @NotNull
-//    private UUID sellerId;
 
     @NotNull
     private AdStatus status;
@@ -21,15 +21,26 @@ public class CarAdRequestDto {
     @PositiveOrZero
     private int editAttempts;
 
-    @NotNull
-    private UUID dealershipId;
+    private UUID dealershipId; // nullable
+
     @NotNull
     private UUID brandId;
+
     @NotNull
     private UUID modelId;
 
-    @Min(1886)
+    @ValidYear
     private int year;
+
+    @PositiveOrZero
+    private Integer mileage;
+
+    private FuelType fuelType;
+
+    @PositiveOrZero
+    private Integer ownersCount;
+
+    private List<String> photos;
 
     @NotNull
     private CurrencyCode originalCurrency;
@@ -50,9 +61,8 @@ public class CarAdRequestDto {
     @Positive
     private BigDecimal priceUAH;
 
-    @NotBlank
     private String exchangeRateSource;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime exchangeRateDate;
 }

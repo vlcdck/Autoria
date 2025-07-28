@@ -68,6 +68,7 @@ public class JwtTokenProvider {
                 .map(Permission::getCode)
                 .collect(Collectors.toSet());
         claims.put("permissions", permissions);
+        claims.put("authorities", permissions);
 
         return buildToken(claims, appUserDetails.getUsername(), accessTokenExpiration);
     }

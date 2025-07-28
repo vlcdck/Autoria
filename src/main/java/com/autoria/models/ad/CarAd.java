@@ -2,6 +2,7 @@ package com.autoria.models.ad;
 
 import com.autoria.enums.AdStatus;
 import com.autoria.enums.CurrencyCode;
+import com.autoria.enums.FuelType;
 import com.autoria.models.car.CarBrand;
 import com.autoria.models.car.CarModel;
 import com.autoria.models.dealership.Dealership;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -57,6 +59,18 @@ public class CarAd {
     @Min(1886)
     private int year;
 
+    private Integer mileage;
+
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType;
+
+    private Integer ownersCount;
+
+    @ElementCollection
+    @CollectionTable(name = "car_ad_photos", joinColumns = @JoinColumn(name = "car_ad_id"))
+    @Column(name = "photo_url")
+    private List<String> photos;
+
     @Enumerated(EnumType.STRING)
     @NotNull
     private CurrencyCode originalCurrency;
@@ -76,5 +90,5 @@ public class CarAd {
     private String exchangeRateSource;
 
     private LocalDateTime exchangeRateDate;
-
 }
+

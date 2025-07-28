@@ -34,7 +34,8 @@ public class AppUserDetails implements UserDetails {
                 .flatMap(role -> {
                     // Додаємо і роль, і її пермішени
                     Set<GrantedAuthority> authorities = role.getPermissions().stream()
-                            .map(permission -> (GrantedAuthority) () -> permission.getCode())
+
+                            .map(permission -> (GrantedAuthority) permission::getCode)
                             .collect(Collectors.toSet());
 
                     // Додаємо роль як GrantedAuthority (якщо потрібно)

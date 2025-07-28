@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -55,11 +56,11 @@ public class SecurityConfig {
                         // Всі можуть реєструватись та логінитись
                         .requestMatchers("/api/v1/auth/**").permitAll()
 
-                        // Перегляд оголошень відкритий для всіх
-                        .requestMatchers(HttpMethod.GET, "/api/v1/listings/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/listings").permitAll() // загальний список всіх оголошень
+                        .requestMatchers(HttpMethod.GET, "/api/v1/listings/filter").permitAll()
+                        .requestMatchers("/api/v1/listings/my/**").hasAnyRole("SELLER", "MANAGER", "ADMIN") // захист для особистих оголошень
+                        .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN") // інші операції з оголошеннями
 
-                        // Продавці, менеджери та адміни можуть керувати оголошеннями
-                        .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
 
                         // Менеджери і адміни можуть керувати користувачами
                         .requestMatchers("/api/v1/users/ban/**").hasAnyRole("MANAGER", "ADMIN")
@@ -67,6 +68,19 @@ public class SecurityConfig {
                         // Адмін може все інше
                         .anyRequest().hasRole("ADMIN")
                 )
+
+                // Додаємо обробники помилок:
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.getWriter().write("Access Denied");
+                        })
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                            response.getWriter().write("Unauthorized");
+                        })
+                )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Без сесій (JWT)
                 .authenticationProvider(authenticationProvider()) // Вказуємо власний провайдер аутентифікації

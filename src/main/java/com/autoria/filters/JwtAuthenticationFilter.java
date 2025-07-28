@@ -2,8 +2,8 @@ package com.autoria.filters;
 
 import com.autoria.models.user.AppUser;
 import com.autoria.repository.AppUserRepository;
-import com.autoria.security.user.AppUserDetailService;
 import com.autoria.security.jwt.JwtTokenProvider;
+import com.autoria.security.user.AppUserDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -30,7 +30,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getServletPath();
         if (path.startsWith("/api/v1/auth/")) {
@@ -68,12 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             AppUser appUser = appUserRepository.findByEmail(userEmail)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userEmail));
 
-            if (jwtTokenProvider.isTokenValid(jwt, userDetails)
-                    && !jwt.equals(appUser.getRefreshToken())) {
+            if (jwtTokenProvider.isTokenValid(jwt, userDetails) && !jwt.equals(appUser.getRefreshToken())) {
 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
+                        userDetails, null, userDetails.getAuthorities());
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
