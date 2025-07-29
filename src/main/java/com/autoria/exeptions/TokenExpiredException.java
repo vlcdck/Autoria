@@ -2,7 +2,9 @@ package com.autoria.exeptions;
 
 public class TokenExpiredException extends RuntimeException {
     public TokenExpiredException(String message) {
-        super();
+        super(message);
     }
-
+    public TokenExpiredException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

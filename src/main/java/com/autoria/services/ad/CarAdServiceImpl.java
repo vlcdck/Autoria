@@ -88,6 +88,7 @@ public class CarAdServiceImpl implements CarAdService {
         validateStatusTransition(existingAd.getStatus(), dto.getStatus());
 
         existingAd.setStatus(dto.getStatus());
+        existingAd.setEditAttempts(dto.getEditAttempts());
         existingAd.setBrand(getBrand(dto.getBrandId()));
         existingAd.setModel(getModel(dto.getModelId()));
         existingAd.setDealership(getDealership(dto.getDealershipId()));
@@ -109,9 +110,28 @@ public class CarAdServiceImpl implements CarAdService {
     }
 
     @Override
-    public Page<CarAdResponseDto> getMyAds(Pageable pageable) {
+    public Page<CarAdResponseDto> getMyAds(
+            AdStatus status,
+            UUID brandId,
+            UUID modelId,
+            Integer yearFrom,
+            Integer yearTo,
+            Integer mileageFrom,
+            Integer mileageTo,
+            BigDecimal priceFrom,
+            BigDecimal priceTo,
+            Pageable pageable
+    ) {
         UUID currentUserId = SecurityUtil.getCurrentUserId();
-        return carAdRepository.findBySeller_Id(currentUserId, pageable)
+
+        Specification<CarAd> filterSpec = CarAdSpecification.filterBy(
+                status, brandId, modelId, yearFrom, yearTo, mileageFrom, mileageTo, priceFrom, priceTo);
+
+        Specification<CarAd> userSpec = (root, query, cb) -> cb.equal(root.get("seller").get("id"), currentUserId);
+
+        Specification<CarAd> spec = filterSpec.and(userSpec);
+
+        return carAdRepository.findAll(spec, pageable)
                 .map(carAdMapper::toDto);
     }
 
@@ -136,6 +156,7 @@ public class CarAdServiceImpl implements CarAdService {
                 .orElseThrow(() -> new EntityNotFoundException("Car ad with id " + id + " not found"));
 
         existingAd.setStatus(dto.getStatus());
+        existingAd.setEditAttempts(dto.getEditAttempts());
         existingAd.setBrand(getBrand(dto.getBrandId()));
         existingAd.setModel(getModel(dto.getModelId()));
         existingAd.setDealership(getDealership(dto.getDealershipId()));

@@ -36,7 +36,17 @@ public interface CarAdService {
 
     void deleteAdById(UUID id);
 
-    Page<CarAdResponseDto> getMyAds(Pageable pageable);
+    Page<CarAdResponseDto> getMyAds(
+            AdStatus status,
+            UUID brandId,
+            UUID modelId,
+            Integer yearFrom,
+            Integer yearTo,
+            Integer mileageFrom,
+            Integer mileageTo,
+            BigDecimal priceFrom,
+            BigDecimal priceTo,
+            Pageable pageable);
 
     CarAdResponseDto getAnyAdById(UUID id);
 

@@ -55,12 +55,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Всі можуть реєструватись та логінитись
                         .requestMatchers("/api/v1/auth/**").permitAll()
-
                         .requestMatchers(HttpMethod.GET, "/api/v1/listings").permitAll() // загальний список всіх оголошень
+                        .requestMatchers(HttpMethod.GET, "/api/v1/listings/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/listings/filter").permitAll()
                         .requestMatchers("/api/v1/listings/my/**").hasAnyRole("SELLER", "MANAGER", "ADMIN") // захист для особистих оголошень
-                        .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN") // інші операції з оголошеннями
-
+                        .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
+                        // інші операції з оголошеннями
 
                         // Менеджери і адміни можуть керувати користувачами
                         .requestMatchers("/api/v1/users/ban/**").hasAnyRole("MANAGER", "ADMIN")
@@ -71,13 +71,25 @@ public class SecurityConfig {
 
                 // Додаємо обробники помилок:
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                        .accessDeniedHandler((request, response, ex) -> {
                             response.setStatus(HttpStatus.FORBIDDEN.value());
-                            response.getWriter().write("Access Denied");
+                            response.setContentType("application/json");
+                            response.getWriter().write("""
+                    {
+                      "error": "Forbidden",
+                      "message": "Access is denied"
+                    }
+                    """);
                         })
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                            response.getWriter().write("Unauthorized");
+                            response.setContentType("application/json");
+                            response.getWriter().write("""
+                    {
+                      "error": "Unauthorized",
+                      "message": "Authentication required"
+                    }
+                    """);
                         })
                 )
 
@@ -87,10 +99,5 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Додаємо JWT фільтр
 
         return http.build();
-
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-//        return http.build();
     }
 }

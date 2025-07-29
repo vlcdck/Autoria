@@ -23,16 +23,12 @@ public class CarAdController {
     private final CarAdService carAdService;
 
     @GetMapping
-    public ResponseEntity<Page<CarAdResponseDto>> getAllAds(Pageable pageable) {
-        Page<CarAdResponseDto> ads = carAdService.findAll(null, pageable);
-        return ResponseEntity.ok(ads);
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<Page<CarAdResponseDto>> filterAds(
+    public ResponseEntity<Page<CarAdResponseDto>> getAds(
             @ModelAttribute CarAdFilterRequest filter,
             Pageable pageable
     ) {
+        // Якщо всі поля фільтра null — це фактично "всі записи"
+        // Метод у сервісі нормально обробить null-параметри
         return ResponseEntity.ok(carAdService.filterAds(
                 filter.getStatus(),
                 filter.getBrandId(),
@@ -47,7 +43,13 @@ public class CarAdController {
         ));
     }
 
-    @PostMapping
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CarAdResponseDto> getAdById(@PathVariable UUID id) {
+        return ResponseEntity.ok(carAdService.getAdById(id));
+    }
+
+    @PostMapping("/my")
     @PreAuthorize("hasAuthority('CREATE_OWN_AD')")
     public ResponseEntity<CarAdResponseDto> createAd(@Valid @RequestBody CarAdRequestDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carAdService.createAd(dto));
@@ -55,39 +57,41 @@ public class CarAdController {
 
     @GetMapping("/my")
     @PreAuthorize("hasAuthority('VIEW_OWN_AD')")
-    public ResponseEntity<Page<CarAdResponseDto>> getMyAds(Pageable pageable) {
-        return ResponseEntity.ok(carAdService.getMyAds(pageable));
+    public ResponseEntity<Page<CarAdResponseDto>> getMyAds(
+            @ModelAttribute CarAdFilterRequest filter,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(carAdService.getMyAds(
+                filter.getStatus(),
+                filter.getBrandId(),
+                filter.getModelId(),
+                filter.getYearFrom(),
+                filter.getYearTo(),
+                filter.getMileageFrom(),
+                filter.getMileageTo(),
+                filter.getPriceFrom(),
+                filter.getPriceTo(),
+                pageable
+        ));
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('VIEW_OWN_AD')")
-    public ResponseEntity<CarAdResponseDto> getOwnAd(@PathVariable UUID id) {
-        return ResponseEntity.ok(carAdService.getAdById(id)); // перевірка власності всередині
-    }
-
-    @GetMapping("/{id}/admin")
-    @PreAuthorize("hasAuthority('VIEW_ANY_AD')")
-    public ResponseEntity<CarAdResponseDto> getAnyAd(@PathVariable UUID id) {
-        return ResponseEntity.ok(carAdService.getAnyAdById(id));
-    }
-
-    @PutMapping("/{id}")
+    @PutMapping("/my/{id}")
     @PreAuthorize("hasAuthority('UPDATE_OWN_AD')")
     public ResponseEntity<CarAdResponseDto> updateOwnAd(@PathVariable UUID id, @Valid @RequestBody CarAdRequestDto dto) {
         return ResponseEntity.ok(carAdService.updateAd(id, dto));
+    }
+
+    @DeleteMapping("my/{id}")
+    @PreAuthorize("hasAuthority('DELETE_OWN_AD')")
+    public ResponseEntity<Void> deleteOwnAd(@PathVariable UUID id) {
+        carAdService.deleteAdById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/admin")
     @PreAuthorize("hasAuthority('UPDATE_ANY_AD')")
     public ResponseEntity<CarAdResponseDto> updateAnyAd(@PathVariable UUID id, @Valid @RequestBody CarAdRequestDto dto) {
         return ResponseEntity.ok(carAdService.updateAnyAd(id, dto));
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('DELETE_OWN_AD')")
-    public ResponseEntity<Void> deleteOwnAd(@PathVariable UUID id) {
-        carAdService.deleteAdById(id);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/admin")
