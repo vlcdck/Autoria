@@ -3,6 +3,7 @@ package com.autoria.models.user.dto;
 import com.autoria.enums.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -23,6 +24,10 @@ public class AppUserRequestDto {
     @NotBlank
     @Size(max = 100)
     private String email;
+
+    @NotBlank
+    @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number")
+    private String phoneNumber;
 
     @NotBlank
     private String password;

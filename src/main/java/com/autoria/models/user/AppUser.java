@@ -5,10 +5,7 @@ import com.autoria.models.dealership.Dealership;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,7 +16,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,6 +39,10 @@ public class AppUser {
     @NotBlank
     @Column(unique = true, nullable = false, length = 100)
     private String email;
+
+    @NotBlank
+    @Column(nullable = false, length = 20)
+    private String phoneNumber;
 
     @NotBlank
     @Column(nullable = false)

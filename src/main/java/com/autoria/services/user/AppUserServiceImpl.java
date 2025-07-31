@@ -39,6 +39,8 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     @Transactional
     public AppUserResponseDto createAppUser(AppUserRequestDto appUserRequestDto) {
+
+
         if (appUserRepository.existsByEmail(appUserRequestDto.getEmail())) {
             throw new IllegalArgumentException("User with this email already exists");
         }
@@ -69,7 +71,6 @@ public class AppUserServiceImpl implements AppUserService {
 
         Set<Role> roles = fetchRoles(appUserRequestDto.getRoleIds());
         appUser.setRoles(roles);
-
         return appUserMapper.toDto(appUserRepository.save(appUser));
     }
 

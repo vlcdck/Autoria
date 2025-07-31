@@ -12,6 +12,7 @@ public class CarAdFilterRequest {
     private AdStatus status;
     private UUID brandId;
     private UUID modelId;
+    private String descriptionContains;
 
     private Integer yearFrom;
     private Integer yearTo;

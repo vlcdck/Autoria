@@ -16,6 +16,7 @@ public class AppUserMapper {
                 .firstName(appUserRequestDto.getFirstName())
                 .lastName(appUserRequestDto.getLastName())
                 .email(appUserRequestDto.getEmail())
+                .phoneNumber(appUserRequestDto.getPhoneNumber())
                 .password(appUserRequestDto.getPassword()) // HASH AT SERVICE REMAKE
                 .accountType(appUserRequestDto.getAccountType())
                 .build();
@@ -28,6 +29,7 @@ public class AppUserMapper {
         appUserResponseDto.setFirstName(appUser.getFirstName());
         appUserResponseDto.setLastName(appUser.getLastName());
         appUserResponseDto.setEmail(appUser.getEmail());
+        appUserResponseDto.setPhoneNumber(appUser.getPhoneNumber());
         appUserResponseDto.setAccountType(appUser.getAccountType());
         appUserResponseDto.setCreatedAt(appUser.getCreatedAt());
         appUserResponseDto.setUpdatedAt(appUser.getUpdatedAt());

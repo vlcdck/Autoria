@@ -13,6 +13,7 @@ public class AppUserResponseDto {
     private String firstName;
     private String lastName;
     private String email;
+    private String phoneNumber;
     private UUID dealershipId;
     private AccountType accountType;
     private Set<UUID> roleIds;

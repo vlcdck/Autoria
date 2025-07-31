@@ -23,7 +23,7 @@ public class CarAdRequestDto {
 
     private UUID dealershipId; // nullable
 
-    @NotNull
+    @NotNull(message = "Brand ID is required")
     private UUID brandId;
 
     @NotNull
@@ -41,6 +41,8 @@ public class CarAdRequestDto {
     private Integer ownersCount;
 
     private List<String> photos;
+
+    private String description;
 
     @NotNull
     private CurrencyCode originalCurrency;

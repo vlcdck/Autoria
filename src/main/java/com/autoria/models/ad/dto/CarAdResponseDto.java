@@ -4,6 +4,7 @@ package com.autoria.models.ad.dto;
 import com.autoria.enums.AdStatus;
 import com.autoria.enums.CurrencyCode;
 import com.autoria.enums.FuelType;
+import com.autoria.models.user.dto.SimpleAppUserDto;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,17 +15,18 @@ import java.util.UUID;
 @Data
 public class CarAdResponseDto {
     private UUID id;
-    private UUID sellerId;
+    private SimpleAppUserDto seller;
     private AdStatus status;
     private int editAttempts;
-    private UUID dealershipId;
-    private UUID brandId;
-    private UUID modelId;
+    private SimpleEntityDto dealership;
+    private SimpleEntityDto brand;
+    private SimpleEntityDto model;
     private int year;
     private Integer mileage;
     private FuelType fuelType;
     private Integer ownersCount;
     private List<String> photos;
+    private String description;
     private CurrencyCode originalCurrency;
     private BigDecimal price;
     private BigDecimal priceUSD;

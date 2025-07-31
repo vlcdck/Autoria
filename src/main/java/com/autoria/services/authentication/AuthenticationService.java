@@ -63,6 +63,7 @@ public class AuthenticationService {
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
                 .email(registerRequest.getEmail())
+                .phoneNumber(registerRequest.getPhoneNumber())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .roles(Set.of(baseRole))
                 .accountType(AccountType.BASIC)

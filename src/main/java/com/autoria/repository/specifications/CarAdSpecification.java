@@ -22,7 +22,8 @@ public class CarAdSpecification {
             Integer mileageFrom,
             Integer mileageTo,
             BigDecimal priceFrom,
-            BigDecimal priceTo
+            BigDecimal priceTo,
+            String descriptionContains
     ) {
         return (Root<CarAd> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
             Predicate predicate = cb.conjunction();
@@ -54,7 +55,16 @@ public class CarAdSpecification {
             if (priceTo != null) {
                 predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("price"), priceTo));
             }
+            if (descriptionContains != null && !descriptionContains.isEmpty()) {
+                predicate = cb.and(predicate, cb.like(cb.lower(root.get("description")), "%" + descriptionContains.toLowerCase() + "%"));
+            }
             return predicate;
         };
+    }
+    public static Specification<CarAd> ownedByUser(UUID userId) {
+        return (
+                root,
+                query,
+                cb) -> cb.equal(root.get("seller").get("id"), userId);
     }
 }

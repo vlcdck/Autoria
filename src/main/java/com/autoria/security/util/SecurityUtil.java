@@ -21,4 +21,16 @@ public class SecurityUtil {
         return ((AppUserDetails) authentication.getPrincipal()).getAppUser();
     }
 
+    public static boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.isAuthenticated() &&
+                !(authentication.getPrincipal() instanceof String && "anonymousUser".equals(authentication.getPrincipal()));
+    }
+
+    public static boolean hasRole(String role) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) return false;
+        return authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_" + role));
+    }
 }

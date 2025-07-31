@@ -8,10 +8,7 @@ import com.autoria.models.car.CarModel;
 import com.autoria.models.dealership.Dealership;
 import com.autoria.models.user.AppUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +39,7 @@ public class CarAd {
     private AdStatus status;
 
     @PositiveOrZero
-    private int editAttempts;
+    private Integer editAttempts;
 
     @ManyToOne
     @JoinColumn(name = "dealership_id", nullable = true)
@@ -70,6 +67,8 @@ public class CarAd {
     @CollectionTable(name = "car_ad_photos", joinColumns = @JoinColumn(name = "car_ad_id"))
     @Column(name = "photo_url")
     private List<String> photos;
+
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @NotNull
