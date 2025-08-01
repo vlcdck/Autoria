@@ -1,6 +1,7 @@
 package com.autoria.services.ad.util;
 
 import com.autoria.enums.AdStatus;
+import com.autoria.enums.CurrencyCode;
 import com.autoria.models.ad.CarAd;
 import com.autoria.models.car.CarBrand;
 import com.autoria.models.car.CarModel;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -26,7 +30,7 @@ public class CarAdHelperService {
     private final CarAdRepository carAdRepository;
 
     /**
-     * Отримати бренд за id або викинути помилку.
+     * Get brand by id or throw an error.
      */
     public CarBrand getBrand(UUID brandId) {
         if (brandId == null) throw new IllegalArgumentException("Brand ID must not be null");
@@ -35,7 +39,7 @@ public class CarAdHelperService {
     }
 
     /**
-     * Отримати модель за id або викинути помилку.
+     * Get model by id or throw an error.
      */
     public CarModel getModel(UUID modelId) {
         if (modelId == null) throw new IllegalArgumentException("Model ID must not be null");
@@ -44,7 +48,7 @@ public class CarAdHelperService {
     }
 
     /**
-     * Отримати дилершип або null, якщо id == null.
+     * Get dealership or null if id == null.
      */
     public Dealership getDealership(UUID dealershipId) {
         if (dealershipId == null) return null;
@@ -53,7 +57,7 @@ public class CarAdHelperService {
     }
 
     /**
-     * Перевірка переходу статусу оголошення.
+     * Checking the ad status transition.
      */
     public void validateStatusTransition(AdStatus oldStatus, AdStatus newStatus) {
         if (oldStatus == AdStatus.ARCHIVED) {
@@ -65,7 +69,7 @@ public class CarAdHelperService {
     }
 
     /**
-     * Знайти оголошення, яке належить поточному користувачу, або викинути помилку.
+     * Find an ad that belongs to the current user, or throw an error.
      */
     public CarAd findAdOwnedByUser(UUID adId, UUID userId) {
         CarAd ad = carAdRepository.findById(adId)
@@ -74,5 +78,16 @@ public class CarAdHelperService {
             throw new AccessDeniedException("You can operate only on your own ads");
         }
         return ad;
+    }
+
+    /**
+     * Sets converted prices in UAH, USD and EUR.
+     */
+    public void setConvertedPrices(CarAd carAd, Map<CurrencyCode, BigDecimal> prices) {
+        carAd.setPriceUAH(prices.getOrDefault(CurrencyCode.UAH, BigDecimal.ZERO));
+        carAd.setPriceUSD(prices.getOrDefault(CurrencyCode.USD, BigDecimal.ZERO));
+        carAd.setPriceEUR(prices.getOrDefault(CurrencyCode.EUR, BigDecimal.ZERO));
+        carAd.setExchangeRateSource("PrivatBank API");
+        carAd.setExchangeRateDate(LocalDateTime.now());
     }
 }

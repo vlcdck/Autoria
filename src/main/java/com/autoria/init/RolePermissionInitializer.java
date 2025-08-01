@@ -24,16 +24,15 @@ public class RolePermissionInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // 1. Створюємо всі можливі Permission
-        Arrays.stream(PermissionCode.values()).forEach(code -> {
-            permissionRepository.findByCode(code.name()).orElseGet(() ->
-                    permissionRepository.save(Permission.builder()
-                            .code(code.name())
-                            .description(code.name().replace("_", " ").toLowerCase())
-                            .build()));
-        });
+        // Create all possible Permissions
+        Arrays.stream(PermissionCode.values()).forEach(code ->
+                permissionRepository.findByCode(code.name()).orElseGet(() ->
+                        permissionRepository.save(Permission.builder()
+                                .code(code.name())
+                                .description(code.name().replace("_", " ").toLowerCase())
+                                .build())));
 
-        createRole(RoleType.BUYER, Set.of()); // без доступу до оголошень
+        createRole(RoleType.BUYER, Set.of()); // without access to ads
 
         createRole(RoleType.SELLER, Set.of(
                 PermissionCode.CREATE_OWN_AD,

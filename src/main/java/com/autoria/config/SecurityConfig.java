@@ -1,12 +1,16 @@
 package com.autoria.config;
 
+
 import com.autoria.filters.JwtAuthenticationFilter;
 import com.autoria.security.user.AppUserDetailService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,10 +20,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -50,54 +57,50 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Всі можуть реєструватись та логінитись
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/listings").permitAll() // загальний список всіх оголошень
-                        .requestMatchers(HttpMethod.GET, "/api/v1/listings/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/listings/filter").permitAll()
-                        .requestMatchers("/api/v1/listings/my/**").hasAnyRole("SELLER", "MANAGER", "ADMIN") // захист для особистих оголошень
+                        .requestMatchers(HttpMethod.GET, "/api/v1/listings", "/api/v1/listings/*").permitAll()
+                        .requestMatchers("/api/v1/listings/my/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
                         .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
-                        // інші операції з оголошеннями
+                        .requestMatchers("/api/v1/users/ban/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
 
-                        // Менеджери і адміни можуть керувати користувачами
-                        .requestMatchers("/api/v1/users/ban/**").hasAnyRole("MANAGER", "ADMIN")
-
-                        // Адмін може все інше
                         .anyRequest().hasRole("ADMIN")
                 )
-
-                // Додаємо обробники помилок:
-                .exceptionHandling(exception -> exception
-                        .accessDeniedHandler((request, response, ex) -> {
-                            response.setStatus(HttpStatus.FORBIDDEN.value());
-                            response.setContentType("application/json");
-                            response.getWriter().write("""
-                    {
-                      "error": "Forbidden",
-                      "message": "Access is denied"
-                    }
-                    """);
-                        })
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                            response.setContentType("application/json");
-                            response.getWriter().write("""
-                    {
-                      "error": "Unauthorized",
-                      "message": "Authentication required"
-                    }
-                    """);
-                        })
+                .exceptionHandling(exceptions -> exceptions
+                        .accessDeniedHandler(this::handleAccessDenied)
+                        .authenticationEntryPoint(this::handleAuthenticationEntryPoint)
                 )
-
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Без сесій (JWT)
-                .authenticationProvider(authenticationProvider()) // Вказуємо власний провайдер аутентифікації
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Додаємо JWT фільтр
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    private void handleAccessDenied(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    AccessDeniedException ex) throws IOException {
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType("application/json");
+        response.getWriter().write("""
+                {
+                  "error": "Forbidden",
+                  "message": "Access is denied"
+                }
+                """);
+    }
+
+    private void handleAuthenticationEntryPoint(HttpServletRequest request,
+                                                HttpServletResponse response,
+                                                AuthenticationException ex) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
+        response.getWriter().write("""
+                {
+                  "error": "Unauthorized",
+                  "message": "Authentication required"
+                }
+                """);
     }
 }

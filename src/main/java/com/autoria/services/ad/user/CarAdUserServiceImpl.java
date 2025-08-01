@@ -1,16 +1,21 @@
 package com.autoria.services.ad.user;
 
 import com.autoria.enums.AdStatus;
+import com.autoria.enums.CurrencyCode;
 import com.autoria.enums.ModerationResult;
 import com.autoria.mappers.car.CarAdMapper;
 import com.autoria.models.ad.CarAd;
 import com.autoria.models.ad.dto.CarAdRequestDto;
 import com.autoria.models.ad.dto.CarAdResponseDto;
+import com.autoria.models.car.CarBrand;
+import com.autoria.models.car.CarModel;
+import com.autoria.models.dealership.Dealership;
 import com.autoria.models.user.AppUser;
 import com.autoria.repository.CarAdRepository;
 import com.autoria.repository.specifications.CarAdSpecification;
 import com.autoria.security.util.SecurityUtil;
 import com.autoria.services.ad.util.CarAdHelperService;
+import com.autoria.services.currency.CurrencyRateService;
 import com.autoria.services.moderation.OpenAiModerationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -35,6 +41,8 @@ public class CarAdUserServiceImpl implements CarAdUserService {
     private final CarAdMapper carAdMapper;
     private final OpenAiModerationService openAiModerationService;
     private final CarAdHelperService helper;
+    private final CurrencyRateService currencyRateService;
+
 
     @Override
     public Page<CarAdResponseDto> filterAds(
@@ -81,11 +89,16 @@ public class CarAdUserServiceImpl implements CarAdUserService {
     @Override
     public CarAdResponseDto createAd(CarAdRequestDto dto) {
         AppUser currentUser = SecurityUtil.getCurrentUser();
-        var brand = helper.getBrand(dto.getBrandId());
-        var model = helper.getModel(dto.getModelId());
-        var dealership = helper.getDealership(dto.getDealershipId());
+        CarBrand brand = helper.getBrand(dto.getBrandId());
+        CarModel model = helper.getModel(dto.getModelId());
+        Dealership dealership = helper.getDealership(dto.getDealershipId());
+
+        Map<CurrencyCode, BigDecimal> convertedPrices =
+                currencyRateService.convertToAll(dto.getOriginalCurrency(), dto.getPrice());
 
         CarAd carAd = carAdMapper.toEntity(dto, currentUser, dealership, brand, model);
+
+        helper.setConvertedPrices(carAd, convertedPrices);
 
         ModerationResult moderationResult = openAiModerationService.checkContent(dto.getDescription());
         log.debug("Moderation result: {}", moderationResult);
@@ -164,6 +177,14 @@ public class CarAdUserServiceImpl implements CarAdUserService {
         }
 
         updateCarAdFields(existingAd, dto);
+
+        Map<CurrencyCode, BigDecimal> convertedPrices = currencyRateService.convertToAll(
+                dto.getOriginalCurrency(),
+                dto.getPrice()
+        );
+
+        helper.setConvertedPrices(existingAd, convertedPrices);
+
         CarAd saved = carAdRepository.save(existingAd);
 
         log.info("User {} updated ad {} with status {}", existingAd.getSeller().getId(), saved.getId(), saved.getStatus());
@@ -223,11 +244,6 @@ public class CarAdUserServiceImpl implements CarAdUserService {
         ad.setPhotos(dto.getPhotos());
         ad.setOriginalCurrency(dto.getOriginalCurrency());
         ad.setPrice(dto.getPrice());
-        ad.setPriceUSD(dto.getPriceUSD());
-        ad.setPriceEUR(dto.getPriceEUR());
-        ad.setPriceUAH(dto.getPriceUAH());
-        ad.setExchangeRateSource(dto.getExchangeRateSource());
-        ad.setExchangeRateDate(dto.getExchangeRateDate());
         ad.setDescription(dto.getDescription());
     }
 }

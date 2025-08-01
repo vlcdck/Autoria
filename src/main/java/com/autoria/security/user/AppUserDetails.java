@@ -32,13 +32,13 @@ public class AppUserDetails implements UserDetails {
 
         return appUser.getRoles().stream()
                 .flatMap(role -> {
-                    // Додаємо і роль, і її пермішени
+
                     Set<GrantedAuthority> authorities = role.getPermissions().stream()
 
                             .map(permission -> (GrantedAuthority) permission::getCode)
                             .collect(Collectors.toSet());
 
-                    // Додаємо роль як GrantedAuthority (якщо потрібно)
+
                     authorities.add((GrantedAuthority) () -> "ROLE_" + role.getName().name());
 
                     return authorities.stream();
@@ -53,7 +53,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return appUser.getEmail(); // Spring Security працює з username – у тебе це email
+        return appUser.getEmail();
     }
 
     @Override

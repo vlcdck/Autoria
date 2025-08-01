@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
         if (path.startsWith("/api/v1/auth/")) {
             filterChain.doFilter(request, response);
-            return; // пропускаємо без авторизації
+            return;
         }
 
         String authHeader = request.getHeader("Authorization");

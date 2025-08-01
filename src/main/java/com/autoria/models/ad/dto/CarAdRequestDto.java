@@ -4,11 +4,12 @@ import com.autoria.enums.AdStatus;
 import com.autoria.enums.CurrencyCode;
 import com.autoria.enums.FuelType;
 import com.autoria.validation.ValidYear;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,26 +46,10 @@ public class CarAdRequestDto {
     private String description;
 
     @NotNull
-    private CurrencyCode originalCurrency;
-
-    @NotNull
     @Positive
     private BigDecimal price;
 
     @NotNull
-    @Positive
-    private BigDecimal priceUSD;
+    private CurrencyCode originalCurrency;
 
-    @NotNull
-    @Positive
-    private BigDecimal priceEUR;
-
-    @NotNull
-    @Positive
-    private BigDecimal priceUAH;
-
-    private String exchangeRateSource;
-
-    @NotNull
-    private LocalDateTime exchangeRateDate;
 }

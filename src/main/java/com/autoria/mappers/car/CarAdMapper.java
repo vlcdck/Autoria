@@ -73,11 +73,6 @@ public class CarAdMapper {
                 .photos(dto.getPhotos())
                 .originalCurrency(dto.getOriginalCurrency())
                 .price(dto.getPrice())
-                .priceUSD(dto.getPriceUSD())
-                .priceUAH(dto.getPriceUAH())
-                .priceEUR(dto.getPriceEUR())
-                .exchangeRateSource(dto.getExchangeRateSource())
-                .exchangeRateDate(dto.getExchangeRateDate())
                 .build();
     }
 }
