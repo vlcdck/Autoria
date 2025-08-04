@@ -11,7 +11,6 @@ import com.autoria.repository.PermissionRepository;
 import com.autoria.repository.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
     public RoleResponseDto createRole(RoleRequestDto roleRequestDto) {
         if (roleRepository.existsByName(roleRequestDto.getName())) {
             throw new IllegalArgumentException("Role with this name already exists");
@@ -58,7 +56,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
     public RoleResponseDto updateRole(UUID id, RoleRequestDto roleRequestDto) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role not found"));
 
@@ -77,7 +74,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
     public void deleteRole(UUID roleId) {
         if (!roleRepository.existsById(roleId)) {
             throw new EntityNotFoundException("Role not found");

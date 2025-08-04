@@ -1,42 +1,39 @@
 package com.autoria.models.user.dto;
 
 import com.autoria.enums.AccountType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 @Data
-public class AppUserRequestDto {
-
+public class AppUserCreateDto {
     @NotBlank
-    @Size(max = 50)
     private String firstName;
 
     @NotBlank
-    @Size(max = 50)
     private String lastName;
 
+    @Email
     @NotBlank
-    @Size(max = 100)
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number")
     private String phoneNumber;
 
     @NotBlank
+    @Size(min = 8)  // співпадає з валідацією в сутності
     private String password;
-
-    private UUID dealershipId; // could be null
-
-    @NotNull
-    private AccountType accountType;
 
     private Set<UUID> roleIds;
 
+    private UUID dealershipId;
+
+    private AccountType accountType;
+
+    private LocalDateTime subscriptionEndDate;
 }

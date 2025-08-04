@@ -25,6 +25,7 @@ public class CarAdResponseDto {
     private Integer mileage;
     private FuelType fuelType;
     private Integer ownersCount;
+    private String region;
     private List<String> photos;
     private String description;
     private CurrencyCode originalCurrency;
@@ -34,5 +35,6 @@ public class CarAdResponseDto {
     private BigDecimal priceEUR;
     private String exchangeRateSource;
     private LocalDateTime exchangeRateDate;
+    private CarAdAnalyticsDto analytics;
 }
 

@@ -63,7 +63,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/listings", "/api/v1/listings/*").permitAll()
                         .requestMatchers("/api/v1/listings/my/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
                         .requestMatchers("/api/v1/listings/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
-                        .requestMatchers("/api/v1/users/ban/**").hasAnyRole("SELLER", "MANAGER", "ADMIN")
+                        .requestMatchers("/api/v1/users/**").authenticated()
+                        .requestMatchers("/api/v1/account/**").authenticated()
 
                         .anyRequest().hasRole("ADMIN")
                 )

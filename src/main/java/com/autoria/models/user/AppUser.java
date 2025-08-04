@@ -73,4 +73,13 @@ public class AppUser {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Column
+    private LocalDateTime subscriptionEndDate;
+
+    public boolean hasActiveSubscription() {
+        return this.accountType == AccountType.PREMIUM &&
+                this.subscriptionEndDate != null &&
+                this.subscriptionEndDate.isAfter(LocalDateTime.now());
+    }
 }

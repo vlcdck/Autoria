@@ -1,19 +1,25 @@
 package com.autoria.services.user;
 
-import com.autoria.models.user.dto.AppUserRequestDto;
+import com.autoria.models.user.dto.AppUserCreateDto;
 import com.autoria.models.user.dto.AppUserResponseDto;
+import com.autoria.models.user.dto.AppUserUpdateDto;
+import com.autoria.models.user.dto.UpgradeAccountRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface AppUserService {
-    AppUserResponseDto createAppUser(AppUserRequestDto appUserRequestDto);
+    AppUserResponseDto createAppUser(AppUserCreateDto appUserCreateDto);
 
-    List<AppUserResponseDto> getAllAppUsers();
+
+    Page<AppUserResponseDto> getAllAppUsers(Pageable pageable);
 
     AppUserResponseDto getAppUserById(UUID id);
 
-    AppUserResponseDto updateAppUser(UUID id, AppUserRequestDto appUserRequestDto);
+    AppUserResponseDto updateAppUser(UUID id, AppUserUpdateDto appUserUpdateDto);
+
+    void upgradeAccount(UUID userId, UpgradeAccountRequest request);
 
     void deleteAppUser(UUID id);
 }

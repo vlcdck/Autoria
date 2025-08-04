@@ -30,6 +30,8 @@ public class CarAdRequestDto {
     @NotNull
     private UUID modelId;
 
+    private String region;
+
     @ValidYear
     private int year;
 

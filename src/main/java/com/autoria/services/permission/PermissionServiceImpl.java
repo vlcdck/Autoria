@@ -7,7 +7,6 @@ import com.autoria.models.user.dto.PermissionResponseDto;
 import com.autoria.repository.PermissionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional
     public PermissionResponseDto createPermission(PermissionRequestDto permissionRequestDto) {
         if (permissionRepository.existsByCode(permissionRequestDto.getCode())) {
-            throw new IllegalArgumentException("Role with this name already exists");
+            throw new IllegalArgumentException("Permission with this code already exists");
         }
 
         Permission permission = permissionMapper.toEntity(permissionRequestDto);
@@ -57,7 +56,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
     public void deletePermission(UUID permissionId) {
         if (!permissionRepository.existsById(permissionId)) {
             throw new EntityNotFoundException("Permission not found with id: " + permissionId);

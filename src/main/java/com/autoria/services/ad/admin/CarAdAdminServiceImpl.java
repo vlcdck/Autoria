@@ -31,18 +31,47 @@ public class CarAdAdminServiceImpl implements CarAdAdminService {
 
     @Override
     public CarAdResponseDto getAnyAdById(UUID id) {
-        CarAd ad = carAdRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Car ad with id " + id + " not found"));
-        return carAdMapper.toDto(ad);
+        final CarAd ad = findCarAdOrThrow(id);
+        return carAdMapper.toDto(ad, true);
     }
 
     @Override
     public CarAdResponseDto updateAnyAd(UUID id, CarAdRequestDto dto) {
-        CarAd ad = carAdRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Car ad with id " + id + " not found"));
+        final CarAd ad = findCarAdOrThrow(id);
 
         helper.validateStatusTransition(ad.getStatus(), dto.getStatus());
 
+        updateCarAdFields(ad, dto);
+
+        ad.setStatus(dto.getStatus());
+
+        final Map<CurrencyCode, BigDecimal> convertedPrices = currencyRateService.convertToAll(
+                dto.getOriginalCurrency(),
+                dto.getPrice()
+        );
+        helper.setConvertedPrices(ad, convertedPrices);
+
+        final CarAd saved = carAdRepository.save(ad);
+        log.info("Admin updated ad {} with status {}", saved.getId(), saved.getStatus());
+
+        return carAdMapper.toDto(saved, true);
+    }
+
+    @Override
+    public void deleteAnyAd(UUID id) {
+        if (!carAdRepository.existsById(id)) {
+            throw new EntityNotFoundException("Car ad with id " + id + " not found");
+        }
+        carAdRepository.deleteById(id);
+        log.info("Admin deleted ad {}", id);
+    }
+
+    private CarAd findCarAdOrThrow(UUID id) {
+        return carAdRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Car ad with id " + id + " not found"));
+    }
+
+    private void updateCarAdFields(CarAd ad, CarAdRequestDto dto) {
         ad.setBrand(helper.getBrand(dto.getBrandId()));
         ad.setModel(helper.getModel(dto.getModelId()));
         ad.setDealership(helper.getDealership(dto.getDealershipId()));
@@ -54,28 +83,5 @@ public class CarAdAdminServiceImpl implements CarAdAdminService {
         ad.setOriginalCurrency(dto.getOriginalCurrency());
         ad.setPrice(dto.getPrice());
         ad.setDescription(dto.getDescription());
-
-        ad.setStatus(dto.getStatus());
-
-        Map<CurrencyCode, BigDecimal> convertedPrices = currencyRateService.convertToAll(
-                dto.getOriginalCurrency(),
-                dto.getPrice()
-        );
-
-        helper.setConvertedPrices(ad, convertedPrices);
-
-        CarAd saved = carAdRepository.save(ad);
-        log.info("Admin updated ad {} with status {}", saved.getId(), saved.getStatus());
-
-        return carAdMapper.toDto(saved);
-    }
-
-    @Override
-    public void deleteAnyAd(UUID id) {
-        if (!carAdRepository.existsById(id)) {
-            throw new EntityNotFoundException("Car ad with id " + id + " not found");
-        }
-        carAdRepository.deleteById(id);
-        log.info("Admin deleted ad {}", id);
     }
 }

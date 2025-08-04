@@ -42,7 +42,7 @@ public class CarAd {
     private Integer editAttempts;
 
     @ManyToOne
-    @JoinColumn(name = "dealership_id", nullable = true)
+    @JoinColumn(name = "dealership_id")
     private Dealership dealership;
 
     @ManyToOne
@@ -62,6 +62,10 @@ public class CarAd {
     private FuelType fuelType;
 
     private Integer ownersCount;
+
+    @Column(length = 100)
+    private String region;
+
 
     @ElementCollection
     @CollectionTable(name = "car_ad_photos", joinColumns = @JoinColumn(name = "car_ad_id"))
