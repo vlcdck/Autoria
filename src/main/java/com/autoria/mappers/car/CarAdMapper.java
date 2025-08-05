@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -73,7 +74,7 @@ public class CarAdMapper {
         // Додаємо аналітику тільки якщо користувач Premium
         if (isPremium) {
             LocalDateTime now = LocalDateTime.now();
-            var adId = ad.getId();
+            UUID adId = ad.getId();
 
             long totalViews = adViewRepository.countByCarAdId(adId);
             long dailyViews = adViewRepository.countByCarAdIdAndViewedAtAfter(adId, now.minusDays(1));

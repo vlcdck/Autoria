@@ -16,7 +16,7 @@ import com.autoria.repository.specifications.CarAdSpecification;
 import com.autoria.security.util.SecurityUtil;
 import com.autoria.services.ad.util.CarAdHelperService;
 import com.autoria.services.currency.CurrencyRateService;
-import com.autoria.services.moderation.OpenAiModerationService;
+import com.autoria.services.moderation.ModerationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class CarAdUserServiceImpl implements CarAdUserService {
 
     private final CarAdRepository carAdRepository;
     private final CarAdMapper carAdMapper;
-    private final OpenAiModerationService openAiModerationService;
+    private final ModerationService moderationService;
     private final CarAdHelperService helper;
     private final CurrencyRateService currencyRateService;
 
@@ -59,12 +59,13 @@ public class CarAdUserServiceImpl implements CarAdUserService {
 
         final boolean isAuthenticated = SecurityUtil.isAuthenticated();
         final boolean isManager = SecurityUtil.hasRole("MANAGER");
+        final boolean isAdmin = SecurityUtil.hasRole("ADMIN");
         final UUID currentUserId = isAuthenticated ? SecurityUtil.getCurrentUserId() : null;
         final boolean isPremium = isAuthenticated && isCurrentUserPremium();
 
         // Якщо користувач неавторизований або авторизований, але не менеджер,
         // і статус не вказаний — показуємо тільки ACTIVE
-        if (!isAuthenticated || (isAuthenticated && !isManager && status == null)) {
+        if (!isAuthenticated || (isAuthenticated && !isManager && !isAdmin && status == null)) {
             status = AdStatus.ACTIVE;
         }
 
@@ -87,6 +88,8 @@ public class CarAdUserServiceImpl implements CarAdUserService {
             throw new AccessDeniedException("Only active ads are visible");
         }
 
+        helper.registerAdView(ad);
+
         final boolean isOwner = SecurityUtil.isAuthenticated() && ad.getSeller().getId().equals(SecurityUtil.getCurrentUserId());
         final boolean isPremium = isCurrentUserPremium();
 
@@ -96,6 +99,14 @@ public class CarAdUserServiceImpl implements CarAdUserService {
     @Override
     public CarAdResponseDto createAd(CarAdRequestDto dto) {
         final AppUser currentUser = SecurityUtil.getCurrentUser();
+
+        if (!currentUser.hasActiveSubscription()) {
+            long existingAdsCount = carAdRepository.countBySellerId(currentUser.getId());
+            if (existingAdsCount >= 1) {
+                throw new IllegalStateException("A basic account can have only one active ad.");
+            }
+        }
+
         final CarBrand brand = helper.getBrand(dto.getBrandId());
         final CarModel model = helper.getModel(dto.getModelId());
         final Dealership dealership = helper.getDealership(dto.getDealershipId());
@@ -106,7 +117,7 @@ public class CarAdUserServiceImpl implements CarAdUserService {
         final CarAd carAd = carAdMapper.toEntity(dto, currentUser, dealership, brand, model);
         helper.setConvertedPrices(carAd, convertedPrices);
 
-        final ModerationResult moderationResult = openAiModerationService.checkContent(dto.getDescription());
+        final ModerationResult moderationResult = moderationService.checkContent(dto.getDescription());
         log.debug("Moderation result: {}", moderationResult);
 
         if (moderationResult == ModerationResult.SAFE) {
@@ -116,7 +127,7 @@ public class CarAdUserServiceImpl implements CarAdUserService {
             carAd.setStatus(AdStatus.REJECTED);
             carAd.setEditAttempts(1);
         } else {
-            log.warn("OpenAI moderation issue ({}), creating ad with status PENDING", moderationResult);
+            log.warn("Moderation issue ({}), creating ad with status UNDER_MODERATION", moderationResult);
             carAd.setStatus(AdStatus.UNDER_MODERATION);
             carAd.setEditAttempts(0);
         }
@@ -135,12 +146,12 @@ public class CarAdUserServiceImpl implements CarAdUserService {
         final boolean isModerator = SecurityUtil.hasRole("ADMIN") || SecurityUtil.hasRole("MANAGER");
         if (existingAd.getEditAttempts() != null && existingAd.getEditAttempts() >= 3 && !isModerator) {
             log.warn("User {} attempted to edit locked ad {}", currentUserId, id);
-            throw new AccessDeniedException("Оголошення заблоковане для редагування. Очікує перевірку модератором.");
+            throw new AccessDeniedException("The announcement is blocked for editing. Awaiting moderator review.");
         }
 
         helper.validateStatusTransition(existingAd.getStatus(), dto.getStatus());
 
-        final ModerationResult moderationResult = openAiModerationService.checkContent(dto.getDescription());
+        final ModerationResult moderationResult = moderationService.checkContent(dto.getDescription());
         log.info("Moderation result: {}", moderationResult);
 
         handleModerationResult(existingAd, moderationResult);
@@ -229,9 +240,9 @@ public class CarAdUserServiceImpl implements CarAdUserService {
 
             carAdRepository.save(ad);
             log.warn("Description failed moderation. Attempts: {}. Current status: {}", attempts, ad.getStatus());
-            throw new IllegalArgumentException("Опис містить заборонений контент. Редагування обмежено.");
+            throw new IllegalArgumentException("The description contains prohibited content. Editing is restricted.");
         } else if (moderationResult == ModerationResult.QUOTA_EXCEEDED || moderationResult == ModerationResult.ERROR) {
-            log.warn("OpenAI moderation issue: {}. Allowing update with status PENDING.", moderationResult);
+            log.warn("Moderation issue: {}. Allowing update with status PENDING.", moderationResult);
             attempts++;
             ad.setEditAttempts(attempts);
 

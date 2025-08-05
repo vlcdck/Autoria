@@ -2,6 +2,6 @@ package com.autoria.services.moderation;
 
 import com.autoria.enums.ModerationResult;
 
-public interface OpenAiModerationService {
+public interface ModerationService {
     ModerationResult checkContent(String content);
 }

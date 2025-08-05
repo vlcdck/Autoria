@@ -42,4 +42,6 @@ public class PublicCarAdController {
     public ResponseEntity<CarAdResponseDto> getAdById(@PathVariable UUID id) {
         return ResponseEntity.ok(carAdUserService.getAdById(id));
     }
+
+
 }

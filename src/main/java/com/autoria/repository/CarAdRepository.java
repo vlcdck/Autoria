@@ -1,8 +1,6 @@
 package com.autoria.repository;
 
 import com.autoria.models.ad.CarAd;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +17,8 @@ public interface CarAdRepository extends JpaRepository<CarAd, UUID>, JpaSpecific
 
     @Query("SELECT AVG(c.price) FROM CarAd c WHERE c.status = 'ACTIVE'")
     BigDecimal findAvgPriceUkraine();
+
+    long countBySellerId(UUID sellerId);
+
 
 }

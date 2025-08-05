@@ -2,14 +2,12 @@ package com.autoria.services.ad.util;
 
 import com.autoria.enums.AdStatus;
 import com.autoria.enums.CurrencyCode;
+import com.autoria.models.ad.AdView;
 import com.autoria.models.ad.CarAd;
 import com.autoria.models.car.CarBrand;
 import com.autoria.models.car.CarModel;
 import com.autoria.models.dealership.Dealership;
-import com.autoria.repository.CarAdRepository;
-import com.autoria.repository.CarBrandRepository;
-import com.autoria.repository.CarModelRepository;
-import com.autoria.repository.DealershipRepository;
+import com.autoria.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -28,6 +26,8 @@ public class CarAdHelperService {
     private final CarModelRepository carModelRepository;
     private final DealershipRepository dealershipRepository;
     private final CarAdRepository carAdRepository;
+    private final AdViewRepository adViewRepository;
+
 
     /**
      * Get brand by id or throw an error.
@@ -89,5 +89,12 @@ public class CarAdHelperService {
         carAd.setPriceEUR(prices.getOrDefault(CurrencyCode.EUR, BigDecimal.ZERO));
         carAd.setExchangeRateSource("PrivatBank API");
         carAd.setExchangeRateDate(LocalDateTime.now());
+    }
+
+    public void registerAdView(CarAd ad) {
+        AdView view = new AdView();
+        view.setCarAd(ad);
+        view.setRegion(ad.getRegion());
+        adViewRepository.save(view);
     }
 }

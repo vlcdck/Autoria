@@ -10,7 +10,6 @@ public class EnvLoader {
                 .load();
 
         dotenv.entries().forEach(entry -> {
-            // Якщо змінної немає у системних перемінних, встановлюємо її як System Property
             if (System.getenv(entry.getKey()) == null) {
                 System.setProperty(entry.getKey(), entry.getValue());
             }
