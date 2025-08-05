@@ -26,6 +26,6 @@ public class AppUserUpdateDto {
 
     private LocalDateTime subscriptionEndDate;
 
-    private Boolean enabled; // якщо хочеш змінювати статус
+    private Boolean enabled;
 
 }

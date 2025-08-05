@@ -20,7 +20,6 @@ public class PermissionController {
 
     private final PermissionService permissionService;
 
-    // Створення дозволу - лише ADMIN
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PermissionResponseDto> createPermission(@Valid @RequestBody PermissionRequestDto request) {
@@ -28,7 +27,6 @@ public class PermissionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // Отримання усіх дозволів
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<PermissionResponseDto>> getAllPermissions() {
@@ -36,7 +34,6 @@ public class PermissionController {
         return ResponseEntity.ok(permissions);
     }
 
-    // Отримання дозволу за ID
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PermissionResponseDto> getPermissionById(@PathVariable UUID id) {
@@ -44,7 +41,6 @@ public class PermissionController {
         return ResponseEntity.ok(permission);
     }
 
-    // Оновлення дозволу - лише ADMIN
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PermissionResponseDto> updatePermission(@PathVariable UUID id,
@@ -53,7 +49,6 @@ public class PermissionController {
         return ResponseEntity.ok(updated);
     }
 
-    // Видалення дозволу - лише ADMIN
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletePermission(@PathVariable UUID id) {

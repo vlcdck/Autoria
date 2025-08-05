@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CurrancyRateRepository extends JpaRepository<CurrencyRate, UUID> {
+public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, UUID> {
     Optional<CurrencyRate> findTopByBaseCurrencyAndTargetCurrencyOrderByDateDesc(
             CurrencyCode base,
             CurrencyCode target

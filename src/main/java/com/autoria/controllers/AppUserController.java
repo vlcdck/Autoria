@@ -25,7 +25,6 @@ public class AppUserController {
 
     private final AppUserService appUserService;
 
-    // Створення користувача - лише ADMIN
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AppUserResponseDto> createUser(@Valid @RequestBody AppUserCreateDto request) {
@@ -33,7 +32,6 @@ public class AppUserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    // Отримання списку усіх користувачів - лише ADMIN
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<AppUserResponseDto>> getAllUsers(
@@ -48,7 +46,6 @@ public class AppUserController {
         return ResponseEntity.ok(usersPage);
     }
 
-    // Отримання одного користувача - ADMIN або власник акаунту
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #id == principal.id")
     public ResponseEntity<AppUserResponseDto> getUserById(@PathVariable UUID id) {
@@ -56,7 +53,6 @@ public class AppUserController {
         return ResponseEntity.ok(user);
     }
 
-    // Оновлення користувача - ADMIN або власник акаунту
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #id == principal.id")
     public ResponseEntity<AppUserResponseDto> updateUser(@PathVariable UUID id,
@@ -65,7 +61,6 @@ public class AppUserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    // Видалення користувача - лише ADMIN
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
@@ -73,7 +68,6 @@ public class AppUserController {
         return ResponseEntity.noContent().build();
     }
 
-    // Апгрейд акаунту - лише ADMIN
     @PostMapping("/upgrade/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> upgradeAccount(@PathVariable("id") UUID userId,

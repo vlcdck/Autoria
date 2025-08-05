@@ -26,7 +26,7 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
         }
         Path filePath = dirPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return "/uploads/" + fileName;  // URL для доступу через веб
+        return "/uploads/" + fileName;  // URL for web access
     }
 
     @Override
@@ -40,7 +40,6 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     }
 
     private Path getUploadPath() {
-        // Замінимо ${user.home} на реальний шлях
         String resolvedPath = uploadDir.replace("${user.home}", System.getProperty("user.home"));
         return Paths.get(resolvedPath);
     }

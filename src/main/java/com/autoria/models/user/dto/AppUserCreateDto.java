@@ -26,7 +26,7 @@ public class AppUserCreateDto {
     private String phoneNumber;
 
     @NotBlank
-    @Size(min = 8)  // співпадає з валідацією в сутності
+    @Size(min = 8)
     private String password;
 
     private Set<UUID> roleIds;

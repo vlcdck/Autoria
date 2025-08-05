@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
 
         Set<Permission> permissions = fetchPermissions(roleRequestDto.getPermissionIds());
         Role role = Role.builder()
-                .name(RoleType.valueOf(roleRequestDto.getName().toUpperCase())) // конвертуємо String у enum
+                .name(RoleType.valueOf(roleRequestDto.getName().toUpperCase()))
                 .permissions(permissions)
                 .build();
         return roleMapper.toDto(roleRepository.save(role));

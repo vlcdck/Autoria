@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Component
 public class AppUserMapper {
 
-    // Створення сутності з DTO для створення
     public AppUser toEntity(AppUserCreateDto dto) {
         if (dto == null) {
             return null;
@@ -25,14 +24,12 @@ public class AppUserMapper {
                 .lastName(dto.getLastName())
                 .email(dto.getEmail())
                 .phoneNumber(dto.getPhoneNumber())
-                .password(dto.getPassword()) // Хешування треба робити окремо в сервісі
+                .password(dto.getPassword())
                 .accountType(dto.getAccountType())
                 .subscriptionEndDate(dto.getSubscriptionEndDate())
                 .build();
-        // Dealership та ролі призначаються в сервісі після пошуку по ID
     }
 
-    // Оновлення сутності з DTO для оновлення
     public void updateEntity(AppUser entity, AppUserUpdateDto dto) {
         if (entity == null || dto == null) {
             return;
@@ -55,11 +52,8 @@ public class AppUserMapper {
         if (dto.getEnabled() != null) {
             entity.setEnabled(dto.getEnabled());
         }
-
-        // Ролі і Dealership теж призначаються в сервісі, оскільки потрібен пошук по ID
     }
 
-    // Конвертація сутності в DTO для відповіді
     public AppUserResponseDto toDto(AppUser entity) {
         if (entity == null) {
             return null;

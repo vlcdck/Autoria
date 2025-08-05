@@ -63,8 +63,8 @@ public class CarAdUserServiceImpl implements CarAdUserService {
         final UUID currentUserId = isAuthenticated ? SecurityUtil.getCurrentUserId() : null;
         final boolean isPremium = isAuthenticated && isCurrentUserPremium();
 
-        // Якщо користувач неавторизований або авторизований, але не менеджер,
-        // і статус не вказаний — показуємо тільки ACTIVE
+        // If the user is not authorised or is authorised but is not a manager,
+        // and the status is not specified, we only show ACTIVE.
         if (!isAuthenticated || (isAuthenticated && !isManager && !isAdmin && status == null)) {
             status = AdStatus.ACTIVE;
         }

@@ -27,7 +27,7 @@ public class CarAdMapper {
     private final AdViewRepository adViewRepository;
 
     public CarAdResponseDto toDto(CarAd ad) {
-        return toDto(ad, false); // базовий варіант
+        return toDto(ad, false);
     }
 
     public CarAdResponseDto toDto(CarAd ad, boolean isPremium) {
@@ -71,7 +71,7 @@ public class CarAdMapper {
             dto.setModel(new SimpleEntityDto(ad.getModel().getId(), ad.getModel().getModel()));
         }
 
-        // Додаємо аналітику тільки якщо користувач Premium
+        // We only add analytics if the user is Premium.
         if (isPremium) {
             LocalDateTime now = LocalDateTime.now();
             UUID adId = ad.getId();

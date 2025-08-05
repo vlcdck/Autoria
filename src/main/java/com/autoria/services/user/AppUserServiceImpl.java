@@ -47,7 +47,6 @@ public class AppUserServiceImpl implements AppUserService {
             throw new IllegalArgumentException("User with this email already exists");
         }
 
-        // Перевірка ролей ADMIN/MANAGER
         if (dto.getRoleIds() != null && !dto.getRoleIds().isEmpty()) {
             boolean hasAdminOrManagerRole = roleRepository.findAllById(dto.getRoleIds())
                     .stream()
@@ -74,7 +73,6 @@ public class AppUserServiceImpl implements AppUserService {
         Set<Role> roles = fetchRoles(dto.getRoleIds());
         appUser.setRoles(roles);
 
-        // Встановлення enabled за логікою, наприклад, активуємо одразу
         appUser.setEnabled(true);
 
         return appUserMapper.toDto(appUserRepository.save(appUser));

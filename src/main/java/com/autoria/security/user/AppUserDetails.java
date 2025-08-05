@@ -58,12 +58,12 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // можна замінити на appUser.isAccountNonExpired() якщо є
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // аналогічно – можеш додати поле в AppUser якщо потрібно
+        return true;
     }
 
     @Override

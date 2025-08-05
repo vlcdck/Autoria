@@ -3,7 +3,7 @@ package com.autoria.services.currency;
 import com.autoria.enums.CurrencyCode;
 import com.autoria.models.currancy.CurrencyRate;
 import com.autoria.models.currancy.dto.PrivatBankRateResponse;
-import com.autoria.repository.CurrancyRateRepository;
+import com.autoria.repository.CurrencyRateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
     @Value("${privatbank.api.url}")
     private String PRIVAT_API_URL;
 
-    private final CurrancyRateRepository currencyRateRepository;
+    private final CurrencyRateRepository currencyRateRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
 

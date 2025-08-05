@@ -20,7 +20,6 @@ public class RoleController {
 
     private final RoleService roleService;
 
-    // Створення ролі — лише ADMIN
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoleResponseDto> createRole(@Valid @RequestBody RoleRequestDto request) {
@@ -28,7 +27,6 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRole);
     }
 
-    // Отримання всіх ролей — будь-хто з доступом (можна змінити)
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RoleResponseDto>> getAllRoles() {
@@ -36,7 +34,6 @@ public class RoleController {
         return ResponseEntity.ok(roles);
     }
 
-    // Отримання ролі за id
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoleResponseDto> getRoleById(@PathVariable UUID id) {
@@ -44,7 +41,6 @@ public class RoleController {
         return ResponseEntity.ok(role);
     }
 
-    // Оновлення ролі — лише ADMIN
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoleResponseDto> updateRole(@PathVariable UUID id,
@@ -53,7 +49,6 @@ public class RoleController {
         return ResponseEntity.ok(updatedRole);
     }
 
-    // Видалення ролі — лише ADMIN
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteRole(@PathVariable UUID id) {
