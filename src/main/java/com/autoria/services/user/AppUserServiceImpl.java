@@ -167,6 +167,24 @@ public class AppUserServiceImpl implements AppUserService {
         appUserRepository.save(user);
     }
 
+    @Transactional
+    public void banUser(UUID userId) {
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        user.setBanned(true);
+        appUserRepository.save(user);
+    }
+
+    @Transactional
+    public void unbanUser(UUID userId) {
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        user.setBanned(false);
+        appUserRepository.save(user);
+    }
+
     private Set<Role> fetchRoles(Set<UUID> roleIds) {
         if (roleIds == null || roleIds.isEmpty()) {
             return Set.of();

@@ -70,6 +70,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             AppUser appUser = appUserRepository.findByEmail(userEmail)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userEmail));
 
+            if (appUser.isBanned()) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"User is banned\"}");
+                return;
+            }
+
             if (jwtTokenProvider.isTokenValid(jwt, userDetails) && !jwt.equals(appUser.getRefreshToken())) {
 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

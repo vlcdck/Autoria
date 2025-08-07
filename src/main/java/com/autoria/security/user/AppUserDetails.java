@@ -63,7 +63,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !appUser.isBanned();
     }
 
     @Override

@@ -80,6 +80,10 @@
             <version>3.0.2</version>
         </dependency>
         <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
@@ -116,6 +120,8 @@
     </dependencies>
 
     <build>
+        <directory>backend</directory>
+        <finalName>autoria</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

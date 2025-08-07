@@ -77,6 +77,9 @@ public class AppUser {
     @Column
     private LocalDateTime subscriptionEndDate;
 
+    @Column(nullable = false)
+    private boolean banned = false;
+
     public boolean hasActiveSubscription() {
         return this.accountType == AccountType.PREMIUM &&
                 this.subscriptionEndDate != null &&

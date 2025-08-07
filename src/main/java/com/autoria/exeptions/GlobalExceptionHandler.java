@@ -72,6 +72,13 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(UserBannedException.class)
+    public ResponseEntity<Map<String, String>> handleUserBanned(UserBannedException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(Map.of("error", ex.getMessage()));
+    }
+
     private ResponseEntity<Map<String, String>> buildResponse(HttpStatus status, String message) {
         Map<String, String> errorBody = new HashMap<>();
         errorBody.put("error", message);

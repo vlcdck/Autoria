@@ -1,0 +1,30 @@
+services:
+  app:
+    depends_on:
+      - db
+    build:
+      context: .
+    volumes:
+      - ./backend:/app
+      - ./uploads:/uploads
+    ports:
+      - "1234:8080"
+    restart: on-failure
+    env_file:
+      - .env
+    command: >
+      sh -c "java -jar autoria.jar"
+  db:
+    image: postgres
+    container_name: autoria_db
+    ports:
+      - "5555:5432"
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgresql_db:/var/lib/postgresql/data
+    restart: on-failure

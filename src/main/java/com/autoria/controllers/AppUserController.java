@@ -75,5 +75,19 @@ public class AppUserController {
         appUserService.upgradeAccount(userId, request);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/ban/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+    public ResponseEntity<Void> banUser(@PathVariable UUID id) {
+        appUserService.banUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/unban/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+    public ResponseEntity<Void> unbanUser(@PathVariable UUID id) {
+        appUserService.unbanUser(id);
+        return ResponseEntity.ok().build();
+    }
 }
 

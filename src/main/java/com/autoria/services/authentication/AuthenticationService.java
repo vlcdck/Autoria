@@ -2,10 +2,7 @@ package com.autoria.services.authentication;
 
 import com.autoria.enums.AccountType;
 import com.autoria.enums.RoleType;
-import com.autoria.exeptions.EmailAlreadyConfirmedException;
-import com.autoria.exeptions.EmailAlreadyTakenException;
-import com.autoria.exeptions.InvalidRefreshTokenException;
-import com.autoria.exeptions.TokenExpiredException;
+import com.autoria.exeptions.*;
 import com.autoria.models.authentication.AuthenticationRequest;
 import com.autoria.models.authentication.AuthenticationResponse;
 import com.autoria.models.refresh.RefreshRequest;
@@ -89,6 +86,10 @@ public class AuthenticationService {
             throw new EmailAlreadyConfirmedException("Email already confirmed");
         }
 
+        if (appUser.isBanned()) {
+            throw new UserBannedException("User is banned");
+        }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
         );
@@ -101,6 +102,10 @@ public class AuthenticationService {
         String username = jwtTokenProvider.extractUsername(token);
 
         AppUser appUser = findUserByEmail(username);
+
+        if (appUser.isBanned()) {
+            throw new UserBannedException("User is banned");
+        }
 
         if (!token.equals(appUser.getRefreshToken())) {
             throw new InvalidRefreshTokenException("Invalid refresh token");
@@ -124,6 +129,10 @@ public class AuthenticationService {
         confirmationTokenRepository.save(confirmationToken);
 
         AppUser appUser = confirmationToken.getAppUser();
+
+        if (appUser.isBanned()) {
+            throw new UserBannedException("User is banned");
+        }
         appUser.setEnabled(true);
 
         return generateTokensAndSave(appUser);

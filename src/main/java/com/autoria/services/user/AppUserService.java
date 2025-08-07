@@ -22,4 +22,8 @@ public interface AppUserService {
     void upgradeAccount(UUID userId, UpgradeAccountRequest request);
 
     void deleteAppUser(UUID id);
+
+    void banUser(UUID userId);
+
+    void unbanUser(UUID userId);
 }
