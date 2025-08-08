@@ -1,3 +1,4 @@
+
 # AUTORIA Clone
 
 A full-featured clone of the AUTORIA platform built with **Java 21**, **Spring Boot**, and **Docker**. The project is designed to be easily launched with a single command after minimal configuration.
@@ -38,11 +39,78 @@ cd Autoria
 
 ### 2. Configure environment variables
 
-Create a `.env` file in the root directory based on the `.env.example` file:
+Create a `.env` file in the root directory based on the `.env.example` file.
 
-- **SPRING_APP_ADMIN_EMAIL** and **SPRING_APP_ADMIN_PASSWORD**: Credentials for the admin user created automatically on startup.
-- **SPRING_MAIL_USERNAME** and **SPRING_MAIL_PASSWORD**: Your email address and **app password** for SMTP (requires two-factor authentication).
-- **PROFANITY_FILTER_API_KEY**: Get your key by registering at [API Ninjas](https://api-ninjas.com/).
+---
+
+## Environment Variables Guide
+
+The project uses a `.env` file to configure essential settings for the database, authentication, email, profanity filtering, and file storage. Below is a detailed explanation of each variable.
+
+### Database Configuration
+
+| Variable           | Description                          | Example                 |
+|--------------------|------------------------------------|-------------------------|
+| `POSTGRES_DB`      | Name of the PostgreSQL database     | `autoria_db`             |
+| `POSTGRES_USER`    | Username for PostgreSQL connection  | `autoria_user`           |
+| `POSTGRES_PASSWORD`| Password for the PostgreSQL user    | `strongpassword123`      |
+
+> These credentials allow the app to connect to the PostgreSQL database running inside Docker.
+
+---
+
+### JWT (JSON Web Token) Settings
+
+| Variable                      | Description                                               | Example           |
+|-------------------------------|-----------------------------------------------------------|-------------------|
+| `JWT_SECRET`                  | Secret key used to sign and verify JWT tokens             | `verySecretKey123` |
+| `JWT_ACCESS_TOKEN_EXPIRATION` | Access token expiration time in **milliseconds**          | `900000` (15 min)  |
+| `JWT_REFRESH_TOKEN_EXPIRATION`| Refresh token expiration time in **milliseconds**         | `604800000` (7 days)|
+| `JWT_EMAIL_TOKEN_EXPIRATION`  | Email verification/reset token expiration time in **minutes** | `30`               |
+
+> Use strong, unpredictable values for `JWT_SECRET`. Adjust expiration times based on your security needs.
+
+---
+
+### Admin User Credentials
+
+| Variable                  | Description                               | Example                |
+|---------------------------|-------------------------------------------|------------------------|
+| `SPRING_APP_ADMIN_EMAIL`  | Email address for the admin user created on startup | `admin@example.com`     |
+| `SPRING_APP_ADMIN_PASSWORD` | Password for the admin user               | `AdminStrongPass!`      |
+
+> This admin user is created automatically when the application starts.
+
+---
+
+### Email Sender (SMTP) Settings
+
+| Variable              | Description                            | Example                      |
+|-----------------------|----------------------------------------|------------------------------|
+| `SPRING_MAIL_USERNAME`| Email address used to send emails      | `myemail@gmail.com`           |
+| `SPRING_MAIL_PASSWORD`| App password for SMTP authentication   | `abcd-efgh-ijkl-mnop`         |
+
+> Generate an **app password** for your email provider (especially if 2FA is enabled) and use it here instead of your regular email password.
+
+---
+
+### Profanity Filter
+
+| Variable             | Description                           | Example                  |
+|----------------------|-------------------------------------|--------------------------|
+| `PROFANITY_FILTER_API_KEY` | API key for the profanity filter service | `your-api-ninjas-key`    |
+
+> Obtain your API key by registering at [API Ninjas](https://api-ninjas.com/).
+
+---
+
+### File Upload Directory
+
+| Variable          | Description                                      | Example                       |
+|-------------------|-------------------------------------------------|-------------------------------|
+| `FILE_UPLOAD_DIR` | Universal path where uploaded files are stored  | `/app/uploads` or `/var/data/uploads` |
+
+> Ensure this directory exists and is writable by the app.
 
 ---
 
