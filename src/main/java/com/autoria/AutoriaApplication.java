@@ -13,7 +13,7 @@ public class AutoriaApplication {
 
     public static void main(String[] args) {
 
-        EnvLoader.loadEnv();  // Завантажуємо .env до старту Spring
+        EnvLoader.loadEnv();
 
 
         SpringApplication.run(AutoriaApplication.class, args);
