@@ -35,13 +35,13 @@ public class AdminInitializer implements ApplicationRunner {
 
 
 
-        // Перевірка, чи вже є хоч один адмін
+        // Check whether there is at least one admin
         if (userRepository.existsByRoles_Name(RoleType.ADMIN)) {
             System.out.println("Admin already exists!");
             return;
         }
 
-        // Перевірка, чи є користувач з цим email
+        // Check if there's a user with this email
         if (userRepository.existsByEmail(adminEmail)) {
             System.out.println("User with email " + adminEmail + " already exists, but without role ADMIN.");
             return;
@@ -52,7 +52,7 @@ public class AdminInitializer implements ApplicationRunner {
                         "Role ADMIN not found. Make sure that RolePermissionInitializer runs first."
                 ));
 
-        // Створюємо адміна
+        // Create Admin
         AppUser admin = AppUser.builder()
                 .firstName("Admin")
                 .lastName("Admin")
