@@ -1,0 +1,1825 @@
+{
+	"info": {
+		"_postman_id": "2fe2f19c-c1a2-429c-bfc8-643ef3ffc540",
+		"name": "Autoria_Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43567033",
+		"_collection_link": "https://vladyslavprydatchenko.postman.co/workspace/Vladyslav-Prydatchenko's-Worksp~af4d3f86-c4e5-45ab-867c-833d196580d2/collection/43567033-2fe2f19c-c1a2-429c-bfc8-643ef3ffc540?action=share&source=collection_link&creator=43567033"
+	},
+	"item": [
+		{
+			"name": "PUBLIC",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"YOUR_FIRSTNAME\",\n  \"lastName\": \"YOUR_LASTNAME\",\n  \"email\": \"asd@asd.com\",\n  \"phoneNumber\": \"0123456789\",\n  \"password\": \"YOUR_PASSWORD\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAYXNkIiwiaWF0IjoxNzUyOTE1ODA4LCJleHAiOjE3NTI5MTU4Mjh9.wj_YOzf5Xe7gI6jGryGtFfR61T-Wve1jAvHE4B2regU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"YOUR_LOGIN\",\n  \"password\": \"YOUR_PASS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": \"YOUR_REFRESH_TOKEN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/refresh",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJVUERBVEVfQU5ZX0FEIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJNQU5BR0VSIl0sInVzZXJJZCI6ImU1NWVhNmNkLWI0OGItNDY5OC1hMzBhLWZhNWExMDQ2YTA4YiIsImVtYWlsIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlVQREFURV9BTllfQUQiLCJCQU5fVVNFUiIsIkFQUFJPVkVfQUQiLCJWSUVXX0FOWV9BRCIsIk1BTkFHRV9BRFMiLCJERUxFVEVfQU5ZX0FEIl0sInN1YiI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJpYXQiOjE3NTM5NDg5NDksImV4cCI6MTc1Mzk1MjU0OX0.TRUfm80wN4lA_iAoeZF_4TVC52tNHhIf_NW2FbXTnCs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "SOLD",
+									"disabled": true
+								},
+								{
+									"key": "brandId",
+									"value": "129fd395-943e-4768-890b-e599f91e7ef8",
+									"disabled": true
+								},
+								{
+									"key": "modelId",
+									"value": "e25920e9-320f-4afb-b6af-8ada4c0e3010",
+									"disabled": true
+								},
+								{
+									"key": "yearFrom",
+									"value": "2010",
+									"disabled": true
+								},
+								{
+									"key": "yearTo",
+									"value": "2023",
+									"disabled": true
+								},
+								{
+									"key": "mileageFrom",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "mileageTo",
+									"value": "150000",
+									"disabled": true
+								},
+								{
+									"key": "priceFrom",
+									"value": "10000",
+									"disabled": true
+								},
+								{
+									"key": "priceTo",
+									"value": "20000",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAdById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/confirm?token=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBrands",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/catalog/brands",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllModels",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/catalog/models",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"models"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getModelsByBrand",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/catalog/models/:brandId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"models",
+								":brandId"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportMissingBrand",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"brandName\": \"Tesla\",\n  \"modelName\": \"Cybertruck\",\n  \"message\": \"Будь ласка, додайте цю модель — вона дуже популярна.\",\n  \"contactEmail\": \"user@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/catalog/missing",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"missing"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SELLER",
+			"item": [
+				{
+					"name": "createOwnAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYzRjZTg3NzktOTNmMS00NTAyLWExZTYtYWIzNTRjZGQ4NDRlIiwiZW1haWwiOiJhc2RAYXNkLmNvbSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzU0MzI2MTI4LCJleHAiOjE3NTQzMjk3Mjh9.5-SCZo_tNgV0QZo5utITspPqX_Pa0rEy5ADBYwex2J4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"brandId\": \"brandId\",\n    \"modelId\": \"modelId\",\n    \"year\": 2018,\n    \"price\": 9800.00,\n    \"originalCurrency\": \"USD\",\n    \"region\": \"Lviv\",\n    \"mileage\": 87000,\n    \"fuelType\": \"DIESEL\",\n    \"ownersCount\": 2,\n    \"description\": \"Чистий автомобіль з хорошою історією\",\n    \"dealershipId\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/my",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"my"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOwnAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYzRjZTg3NzktOTNmMS00NTAyLWExZTYtYWIzNTRjZGQ4NDRlIiwiZW1haWwiOiJhc2RAYXNkLmNvbSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzU0MzI2MTI4LCJleHAiOjE3NTQzMjk3Mjh9.5-SCZo_tNgV0QZo5utITspPqX_Pa0rEy5ADBYwex2J4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/my",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"my"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "SOLD",
+									"disabled": true
+								},
+								{
+									"key": "brandId",
+									"value": "129fd395-943e-4768-890b-e599f91e7ef8",
+									"disabled": true
+								},
+								{
+									"key": "modelId",
+									"value": "e25920e9-320f-4afb-b6af-8ada4c0e3010",
+									"disabled": true
+								},
+								{
+									"key": "yearFrom",
+									"value": "2010",
+									"disabled": true
+								},
+								{
+									"key": "yearTo",
+									"value": "2023",
+									"disabled": true
+								},
+								{
+									"key": "mileageFrom",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "mileageTo",
+									"value": "150000",
+									"disabled": true
+								},
+								{
+									"key": "priceFrom",
+									"value": "10000",
+									"disabled": true
+								},
+								{
+									"key": "priceTo",
+									"value": "20000",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOwnAdById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYzRjZTg3NzktOTNmMS00NTAyLWExZTYtYWIzNTRjZGQ4NDRlIiwiZW1haWwiOiJhc2RAYXNkLmNvbSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzU0MzI2MTI4LCJleHAiOjE3NTQzMjk3Mjh9.5-SCZo_tNgV0QZo5utITspPqX_Pa0rEy5ADBYwex2J4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dealershipId\": null,\n  \"brandId\": \"brandId\",\n  \"modelId\": \"modelId\",\n  \"region\": \"Lviv\",\n  \"year\": 2019,\n  \"mileage\": 91000,\n  \"fuelType\": \"DIESEL\",\n  \"ownersCount\": 2,\n  \"description\": \"Оновлений опис: автомобіль у чудовому стані, готовий до продажу.\",\n  \"price\": 10500.00,\n  \"originalCurrency\": \"USD\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/my/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"my",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOwnAdById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiQkFOX1VTRVIiLCJNQU5BR0VfUk9MRVMiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJWSUVXX0FEX1NUQVRJU1RJQ1MiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI0YmI4OGIxYS1lM2JkLTQwMjMtODVhMy0zNGExMzhjYWJmMjYiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiQkFOX1VTRVIiLCJNQU5BR0VfUk9MRVMiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJWSUVXX0FEX1NUQVRJU1RJQ1MiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzUzODEyNDI5LCJleHAiOjE3NTM4MTYwMjl9.6OhbQ7EYPyU_mlbv99NHZC5K07yXymhspuGg7HBtZ7Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/my/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"my",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addPhotoById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZmZhMjU1ZmItMjVmZi00N2YwLTllOWItOGRiYzBmMzU1NzdjIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDEzMzUzMywiZXhwIjoxNzU0MTM3MTMzfQ.4afhvgimMqpgHyjDi9mkxV2HHo0EVPB2bTRhH7q19d0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/photos/:adId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"photos",
+								":adId"
+							],
+							"variable": [
+								{
+									"key": "adId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adPhotoesById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZmZhMjU1ZmItMjVmZi00N2YwLTllOWItOGRiYzBmMzU1NzdjIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDEzMzUzMywiZXhwIjoxNzU0MTM3MTMzfQ.4afhvgimMqpgHyjDi9mkxV2HHo0EVPB2bTRhH7q19d0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/photos/multiple/:adId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"photos",
+								"multiple",
+								":adId"
+							],
+							"variable": [
+								{
+									"key": "adId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePhoto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZmZhMjU1ZmItMjVmZi00N2YwLTllOWItOGRiYzBmMzU1NzdjIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDEzMzUzMywiZXhwIjoxNzU0MTM3MTMzfQ.4afhvgimMqpgHyjDi9mkxV2HHo0EVPB2bTRhH7q19d0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/photos/:adId?photoUrl=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"photos",
+								":adId"
+							],
+							"query": [
+								{
+									"key": "photoUrl",
+									"value": ""
+								}
+							],
+							"variable": [
+								{
+									"key": "adId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser (only own)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYzRjZTg3NzktOTNmMS00NTAyLWExZTYtYWIzNTRjZGQ4NDRlIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzI0OTQ0LCJleHAiOjE3NTQzMjg1NDR9.JfVZqmtH-t6knhOf4i2LmHz2AwD6ZLHEAIKg5KlgMdw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Seller\",\n  \"lastName\": \"Seller\",\n  \"phoneNumber\": \"+380991234567\",\n  \"dealershipId\": null,\n  \"roleIds\": null     // можна пустий масив або null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById (only own)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword (only own)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI5NzQ4N2IyYS1iYmY1LTRlMWMtODE3MS01YTE3NmJlNGJlNTgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzIzMzg4LCJleHAiOjE3NTQzMjY5ODh9.zV51ZQBB5O8ioLELRUv1AxSWJPO28N1_7Gt6KlWH0_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"YOUR CURRENT PASSWORD\",\n    \"newPassword\": \"YOUR NEW PASSWORD\" //min 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/account/change-password/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"change-password",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeEmail (only own)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI5NzQ4N2IyYS1iYmY1LTRlMWMtODE3MS01YTE3NmJlNGJlNTgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzIzMzg4LCJleHAiOjE3NTQzMjY5ODh9.zV51ZQBB5O8ioLELRUv1AxSWJPO28N1_7Gt6KlWH0_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"YOUR CURRENT EMAIL\",\n    \"newEmail\": \"YOUR NEW EMAIL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/account/change-email/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"change-email",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MANAGER",
+			"item": [
+				{
+					"name": "updateAnyAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJVUERBVEVfQU5ZX0FEIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJNQU5BR0VSIl0sInVzZXJJZCI6ImE4NDk3ZTczLTdkNzgtNDkzYS1iYTI2LWY2ZTY0YmJiZWUwNSIsImVtYWlsIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlVQREFURV9BTllfQUQiLCJCQU5fVVNFUiIsIkFQUFJPVkVfQUQiLCJWSUVXX0FOWV9BRCIsIk1BTkFHRV9BRFMiLCJERUxFVEVfQU5ZX0FEIl0sInN1YiI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJpYXQiOjE3NTQwNDc5MzAsImV4cCI6MTc1NDA1MTUzMH0.pZExsur8SW0-xieI43QY7pbXY7HHo1F-eHYCmTGhqJ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"ACTIVE\",             // Продавець хоче зробити активним, але це проігнорується або переведе в PENDING/UNDER_REVIEW\n  \"dealershipId\": null,\n  \"brandId\": \"20a20e3a-1d17-46fe-ace0-af3bc84c0a27\",\n  \"modelId\": \"98a1bc21-f4bb-43fc-a046-7a41af2897c6\",\n  \"year\": 2015,\n  \"mileage\": 150000,\n  \"fuelType\": \"DIESEL\",\n  \"ownersCount\": 2,\n  \"description\": \"Beautiful\",\n  \"originalCurrency\": \"EUR\",\n  \"price\": 8000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/admin/b3f3c166-6c68-4925-b4b8-5db8860bb7f3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"admin",
+								"b3f3c166-6c68-4925-b4b8-5db8860bb7f3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAnyAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiQkFOX1VTRVIiLCJNQU5BR0VfUk9MRVMiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJWSUVXX0FEX1NUQVRJU1RJQ1MiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI0YmI4OGIxYS1lM2JkLTQwMjMtODVhMy0zNGExMzhjYWJmMjYiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiQkFOX1VTRVIiLCJNQU5BR0VfUk9MRVMiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJWSUVXX0FEX1NUQVRJU1RJQ1MiLCJNQU5BR0VfQURTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzUzODE2MjAyLCJleHAiOjE3NTM4MTk4MDJ9.6j9e_2hb44gB2Bs6sRxmqfCzGUi5-XkWbpWukNpPwuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/:id/admin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								":id",
+								"admin"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnyAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI5NzQ4N2IyYS1iYmY1LTRlMWMtODE3MS01YTE3NmJlNGJlNTgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzI2NzQ1LCJleHAiOjE3NTQzMzAzNDV9.f9I8A-QbenCH03pNeb3OGZy2Dh6MnWNg7gIjfmsYAQE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/listings/admin/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"listings",
+								"admin",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZTJiYjY0ODEtNjVkNS00MmM2LWIzNzItMTY3OTUyNDBlNTBhIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDQxODA0NCwiZXhwIjoxNzU0NDIxNjQ0fQ.Wx8bSGP16n-OYd7Dm3Il-FW0pfjqIrnpsgjMB4JjHg4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/api/v1/users/ban/:id",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"ban",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unbanUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZTJiYjY0ODEtNjVkNS00MmM2LWIzNzItMTY3OTUyNDBlNTBhIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDQxODA0NCwiZXhwIjoxNzU0NDIxNjQ0fQ.Wx8bSGP16n-OYd7Dm3Il-FW0pfjqIrnpsgjMB4JjHg4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/api/v1/users/unban/:id",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"unban",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "Permissions",
+					"item": [
+						{
+							"name": "createPermission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"PERMISSION_CODE\",\n  \"description\": \"description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllPermissions",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getPermissionById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updatePermission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"PERMISSION_CODE\",\n  \"description\": \"description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletePermission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "getAllUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAYXNkIiwiaWF0IjoxNzUyOTE1ODA4LCJleHAiOjE3NTI5MTU4Mjh9.wj_YOzf5Xe7gI6jGryGtFfR61T-Wve1jAvHE4B2regU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"+380991234567\",\n  \"password\": \"strongPassword123\",\n  \"dealershipId\": \"uuid-ділершипу-або-null\",\n  \"accountType\": \"BASIC\",                 // enum AccountType, напр. BASIC, PREMIUM\n  \"subscriptionEndDate\": \"2025-12-31T23:59:59\", // ISO формат або null\n  \"roleIds\": [\"uuid-ролі-1\", \"uuid-ролі-2\"]     // можна пустий масив або null\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUserById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"+380991234567\",\n  \"password\": \"strongPassword123\",\n  \"dealershipId\": null,\n  \"accountType\": \"BASIC\",                 // enum AccountType, напр. BASIC, PREMIUM\n  \"subscriptionEndDate\": \"2025-12-31T23:59:59\", // ISO формат або null\n  \"roleIds\": null     // можна пустий масив або null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAYXNkIiwiaWF0IjoxNzUyOTE1ODA4LCJleHAiOjE3NTI5MTU4Mjh9.wj_YOzf5Xe7gI6jGryGtFfR61T-Wve1jAvHE4B2regU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"YOUR_EMAIL\",\n  \"password\": \"YOUR_PASS\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upgradeAccount",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI1NmM0ZmIzZi1mZmEzLTRkNzUtYmMwZi1iOGU1MjQyMTgyMjgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfQU5ZX0FEIiwiVklFV19PV05fQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzAwNjI4LCJleHAiOjE3NTQzMDQyMjh9.SMuuzAH1gcpNtRU3d47aeuZzFxFC2GmRHj4g-kkvoEU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"newAccountType\": \"PREMIUM\",   // enum AccountType\n  \"durationInDays\": 30           // кількість днів на яку продовжується підписка\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/upgrade/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"upgrade",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "changePassword",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI5NzQ4N2IyYS1iYmY1LTRlMWMtODE3MS01YTE3NmJlNGJlNTgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzIzMzg4LCJleHAiOjE3NTQzMjY5ODh9.zV51ZQBB5O8ioLELRUv1AxSWJPO28N1_7Gt6KlWH0_o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currentPassword\": \"YOUR CURRENT PASSWORD\",\n    \"newPassword\": \"YOUR NEW PASSWORD\" //min 8\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/account/change-password/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"account",
+										"change-password",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "changeEmail",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJyb2xlcyI6WyJBRE1JTiJdLCJ1c2VySWQiOiI5NzQ4N2IyYS1iYmY1LTRlMWMtODE3MS01YTE3NmJlNGJlNTgiLCJlbWFpbCI6InByaWRhdGNoZW5rb3ZsYWRpc2xhdkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJERUxFVEVfT1dOX0FEIiwiTUFOQUdFX1JPTEVTIiwiQkFOX1VTRVIiLCJBUFBST1ZFX0FEIiwiTUFOQUdFX0RFQUxFUlNISVAiLCJWSUVXX0FMTF9VU0VSUyIsIlVQREFURV9PV05fQUQiLCJDUkVBVEVfT1dOX0FEIiwiVVBEQVRFX0FOWV9BRCIsIk1BTkFHRV9QRVJNSVNTSU9OUyIsIlZJRVdfQURfQVZFUkFHRV9QUklDRSIsIlZJRVdfT1dOX0FEIiwiVklFV19BTllfQUQiLCJNQU5BR0VfQURTIiwiVklFV19BRF9TVEFUSVNUSUNTIiwiREVMRVRFX0FOWV9BRCJdLCJzdWIiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiaWF0IjoxNzU0MzIzMzg4LCJleHAiOjE3NTQzMjY5ODh9.zV51ZQBB5O8ioLELRUv1AxSWJPO28N1_7Gt6KlWH0_o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currentPassword\": \"YOUR CURRENT EMAIL\",\n    \"newEmail\": \"YOUR NEW EMAIL\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/account/change-email/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"account",
+										"change-email",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "banUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZTJiYjY0ODEtNjVkNS00MmM2LWIzNzItMTY3OTUyNDBlNTBhIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDQxODA0NCwiZXhwIjoxNzU0NDIxNjQ0fQ.Wx8bSGP16n-OYd7Dm3Il-FW0pfjqIrnpsgjMB4JjHg4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/api/v1/users/ban/:id",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"ban",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "unbanUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiZTJiYjY0ODEtNjVkNS00MmM2LWIzNzItMTY3OTUyNDBlNTBhIiwiZW1haWwiOiJwcmlkYXRjaGVua292bGFkaXNsYXZAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiQ1JFQVRFX09XTl9BRCIsIkRFTEVURV9PV05fQUQiLCJWSUVXX09XTl9BRCIsIlVQREFURV9PV05fQUQiXSwic3ViIjoicHJpZGF0Y2hlbmtvdmxhZGlzbGF2QGdtYWlsLmNvbSIsImlhdCI6MTc1NDQxODA0NCwiZXhwIjoxNzU0NDIxNjQ0fQ.Wx8bSGP16n-OYd7Dm3Il-FW0pfjqIrnpsgjMB4JjHg4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/api/v1/users/unban/:id",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"unban",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "createRole",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAYXNkIiwiaWF0IjoxNzUyOTE1ODA4LCJleHAiOjE3NTI5MTU4Mjh9.wj_YOzf5Xe7gI6jGryGtFfR61T-Wve1jAvHE4B2regU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"ROLE_NAME\",               // Назва ролі (обов’язково, не пусте)\n  \"permissionIds\": [             // Множина UUID дозволів (може бути порожньою або відсутньою)\n    \"PERMISSION_UUID\",\n    \"PERMISSION_UUID\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/roles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRoles",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/roles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getRoleById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/roles/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateRoleById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"ROLE_NEW_NAME\",             // Нова назва ролі (обов’язково, не пусте)\n  \"permissionIds\": []            // Порожній масив, якщо хочеш прибрати всі дозволи\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/roles/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRoleById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6WyJDUkVBVEVfT1dOX0FEIiwiREVMRVRFX09XTl9BRCIsIlZJRVdfT1dOX0FEIiwiVVBEQVRFX09XTl9BRCJdLCJyb2xlcyI6WyJTRUxMRVIiXSwidXNlcklkIjoiYWQ3NWU0OTEtNGQwYi00MjUwLWE5MjMtMWZhMjBiYzdjMDAxIiwiZW1haWwiOiI3ODkyNzAzQHN0dWQua2FpLmVkdS51YSIsImF1dGhvcml0aWVzIjpbIkNSRUFURV9PV05fQUQiLCJERUxFVEVfT1dOX0FEIiwiVklFV19PV05fQUQiLCJVUERBVEVfT1dOX0FEIl0sInN1YiI6Ijc4OTI3MDNAc3R1ZC5rYWkuZWR1LnVhIiwiaWF0IjoxNzU0MzAxMjYzLCJleHAiOjE3NTQzMDQ4NjN9.UrkLkVWCnlq5_f8ZICN8v18wA0YdpD8qSf4LX-m2oEw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/roles/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:1234",
+			"type": "string"
+		}
+	]
+}
