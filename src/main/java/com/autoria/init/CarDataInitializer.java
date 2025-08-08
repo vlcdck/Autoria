@@ -55,7 +55,7 @@ public class CarDataInitializer {
                 }
             }
 
-            log.info("✅Car brand/model init done. Brands added: {}, Models added: {}", brandsAdded, modelsAdded);
+            log.info("Car brand/model init done. Brands added: {}, Models added: {}", brandsAdded, modelsAdded);
 
         } catch (Exception e) {
             log.error("Error initializing car brands/models", e);
