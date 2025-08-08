@@ -65,7 +65,5 @@ public class AdminInitializer implements ApplicationRunner {
                 .build();
 
         userRepository.save(admin);
-
-        System.out.print("✅ Admin created!");
     }
 }
