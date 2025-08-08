@@ -40,19 +40,6 @@ cd Autoria
 
 Create a `.env` file in the root directory based on the `.env.example` file:
 
-```env
-SPRING_APP_ADMIN_EMAIL=your_admin_email@example.com
-SPRING_APP_ADMIN_PASSWORD=your_secure_password
-
-SPRING_MAIL_USERNAME=your_email@example.com
-SPRING_MAIL_PASSWORD=your_email_app_password
-
-PROFANITY_FILTER_API_KEY=your_api_ninjas_key
-
-# Optional: JWT token lifetime configuration (e.g., 3600 for 1 hour)
-JWT_EXPIRATION_TIME=3600
-```
-
 - **SPRING_APP_ADMIN_EMAIL** and **SPRING_APP_ADMIN_PASSWORD**: Credentials for the admin user created automatically on startup.
 - **SPRING_MAIL_USERNAME** and **SPRING_MAIL_PASSWORD**: Your email address and **app password** for SMTP (requires two-factor authentication).
 - **PROFANITY_FILTER_API_KEY**: Get your key by registering at [API Ninjas](https://api-ninjas.com/).
