@@ -9,6 +9,7 @@ import com.autoria.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Order(1)
 public class RolePermissionInitializer implements ApplicationRunner {
 
     private final PermissionRepository permissionRepository;

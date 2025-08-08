@@ -5,7 +5,7 @@ services:
     build:
       context: .
     volumes:
-      - ./backend:/app
+      - ./target:/app
       - ./uploads:/uploads
     ports:
       - "1234:8080"

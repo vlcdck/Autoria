@@ -30,5 +30,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, UUID> {
             """)
     List<AppUser> findAllByRoleName(@Param("roleName") RoleType roleName);
 
+    boolean existsByRoles_Name(RoleType roleName);
+
     boolean existsByEmail(String email);
 }
